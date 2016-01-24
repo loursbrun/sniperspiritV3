@@ -19,7 +19,7 @@ public class Shoot : MonoBehaviour
 			
 						RaycastHit hit;
 						Ray ray = new Ray (transform.position, transform.forward);
-						if (Physics.Raycast (ray, out hit, 110f)) {
+						if (Physics.Raycast (ray, out hit, 3000f)) {
 								Instantiate (bulletHole, hit.point, Quaternion.FromToRotation (Vector3.up, hit.normal));
 						}
 				}

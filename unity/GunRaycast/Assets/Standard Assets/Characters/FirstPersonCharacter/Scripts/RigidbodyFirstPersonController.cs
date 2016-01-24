@@ -46,7 +46,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #if !MOBILE_INPUT
 	            if (Input.GetKey(RunKey))
 	            {
-		            CurrentTargetSpeed *= RunMultiplier;
+		            CurrentTargetSpeed *= RunMultiplier * 5;
 		            m_Running = true;
 	            }
 	            else
