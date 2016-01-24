@@ -34,7 +34,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
+           // m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);   // Fix la hauteur de la lunette
 
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
