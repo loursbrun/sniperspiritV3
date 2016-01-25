@@ -16,7 +16,8 @@ public class Shoot : MonoBehaviour
 						Instantiate (bullet, transform.position, transform.rotation);
 						GetComponent<AudioSource> ().Play ();
 						counter = 0;
-			
+
+						//------------------------Range Hit Raycast-----------------------------------
 						RaycastHit hit;
 						Ray ray = new Ray (transform.position, transform.forward);
 						if (Physics.Raycast (ray, out hit, 3000f)) {
