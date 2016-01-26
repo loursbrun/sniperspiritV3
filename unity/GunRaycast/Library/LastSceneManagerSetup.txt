@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Shoot-Raycast.unity
+- path: Assets/Scenes/SniperSpiritV3.unity
   isLoaded: 1
   isActive: 1
