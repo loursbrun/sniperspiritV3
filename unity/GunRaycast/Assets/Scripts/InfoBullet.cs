@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class InfoBullet : MonoBehaviour
@@ -7,10 +8,18 @@ public class InfoBullet : MonoBehaviour
 		/*
 		* Public
 		*/
+		public Text Origin;
+		public Text Range;
+		public Text info_X;
+		public Text info_Y;
+		public Text info_Z;
 
-		//public GUIText Bullet_X;
-		//public GUIText Bullet_Y;
-		//public GUIText Bullet_Z;
+		public Ray Origin_start;
+		public float range_hit = 0f;
+		public float Bullet_X = 0f;
+		public float Bullet_Y = 0f;
+		public float Bullet_Z = 0f;
+
 
 		/*
 		* Private
@@ -22,12 +31,29 @@ public class InfoBullet : MonoBehaviour
 
 		void Start ()
 		{
-			
+				
 		}
-
 
 		void Update ()
 		{
+				if (Input.GetKey (KeyCode.Mouse0)) {
+						//-----------debug------------------------------------------------------------------------------
+						Origin_start = Shoot.transmitOrigin;
+						Origin.text = Origin_start.ToString ();
+						//print (Shoot.transmitDistance);
+						//print (" x=" + Shoot.transmitRayX);
+						//print (Shoot.transmitRayY);
+						//print (Shoot.transmitRayZ);
+						//------------Bullet GUI -----------------------------------------------------------------------
+						range_hit = Shoot.transmitDistance;
+						Range.text = range_hit.ToString ();
+						Bullet_X = Shoot.transmitRayX;
+						info_X.text = Bullet_X.ToString ();
+						Bullet_Y = Shoot.transmitRayY;
+						info_Y.text = Bullet_Y.ToString ();
+						Bullet_Z = Shoot.transmitRayZ;
+						info_Z.text = Bullet_Z.ToString ();
+				}
 	
 		}
 }
