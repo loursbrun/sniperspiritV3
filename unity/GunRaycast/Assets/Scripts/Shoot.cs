@@ -26,7 +26,8 @@ public class Shoot : MonoBehaviour
 		private bool initTable = false;
 		private RaycastHit hit;
 		private Ray ray;
-		private float decalageZ;
+		private float decalageX;
+		private float decalageY;
 
 		/*
 		* Constructor
@@ -73,13 +74,15 @@ public class Shoot : MonoBehaviour
 				switch (MyFocus) {
 				case 1:
 				//----------------------------------------100 m--------------------------------------
-						decalageZ = hit.point.z + 0.1f;
-						hit.point = new Vector3 (hit.point.x, hit.point.y, decalageZ);
+						decalageX = hit.point.z + 0.1f;
+						decalageY = hit.point.y + 0.1f;
+						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
 						break;
 				case 2:
 				//----------------------------------------200 m--------------------------------------
-						decalageZ = hit.point.z + 0.2f;
-						hit.point = new Vector3 (hit.point.x, hit.point.y, decalageZ);
+						decalageX = hit.point.z - 0.2f;
+						decalageY = hit.point.y - 0.1f;
+						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
 						break;
 				}
 
