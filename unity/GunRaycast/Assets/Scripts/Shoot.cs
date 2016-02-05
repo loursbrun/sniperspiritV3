@@ -23,6 +23,7 @@ public class Shoot : MonoBehaviour
 		* Private
 		*/
 
+
 		private float counter = 0;
 		private bool initTable = false;
 		private RaycastHit hit;
@@ -35,49 +36,61 @@ public class Shoot : MonoBehaviour
 		*/
 
 
-		private int[] tableDistance;				 // Table de tir distance
-		private int[] tablePression;				 // Table de tir pression
-		private int[] tableTemperature;				 // Table de tir temperature
-		private int[] tableWind;				     // Table de tir wind
-		private int[] deriveGyro;					 // Table de tir derive gyroscopique
+		private int[] tableDistance;
+		// Table de tir distance
+		private int[] tablePression;
+		// Table de tir pression
+		private int[] tableTemperature;
+		// Table de tir temperature
+		private int[] tableWind;
+		// Table de tir wind
+		private int[] deriveGyro;
+		// Table de tir derive gyroscopique
 
-		private int distanceTemp = 100;      /// distance temporaire avant le retour recast  
-		private int pressionTemp = 900 ;                // mLbar ou HPA
-		private int temperatureTemp = 20;             // °C
-		private int wind = 5;   				 // m/s
-		private int windDirection = 3 ; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+		private int distanceTemp = 100;
+		/// distance temporaire avant le retour recast  
+		private int pressionTemp = 900;
+		// mLbar ou HPA
+		private int temperatureTemp = 20;
+		// °C
+		private int wind = 5;
+		// m/s
+		private int windDirection = 3;
+		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 
 
-	    // modifucation de la hauteur du tir
-		private int correctionDistance ;           // correction distance
-		private int correctionPression ;           // correction pression
-		private int correctionTemperature ;        // correction temperature
-		private int correctionWindHauteur ;        // correction du vent en hauteur
+		// modifucation de la hauteur du tir
+		private int correctionDistance;
+		// correction distance
+		private int correctionPression;
+		// correction pression
+		private int correctionTemperature;
+		// correction temperature
+		private int correctionWindHauteur;
+		// correction du vent en hauteur
 
 		// modifucation de la direction du tir
-		private int correctionWindDirection ;      // correction du vent en direction
-		private int correctionDeriveGyro ;         // correction derive gyroscopique
+		private int correctionWindDirection;
+		// correction du vent en direction
+		private int correctionDeriveGyro;
+		// correction derive gyroscopique
 
 
 
 
 		// Variable index tableau
-		private int indexDistance ;
-		private int indexPression ;
+		private int indexDistance;
+		private int indexPression;
 		private int indexTemperature;
 
 
-		private int[] returnCorrectionArray ;
+		private int[] returnCorrectionArray;
 
 	
 
 		/*
 		* Constructor
 		*/
-
-
-	
-		
 
 		void Update ()
 		{
@@ -117,6 +130,9 @@ public class Shoot : MonoBehaviour
 		void CalculTable (int MyFocus)
 		{
 
+				//-------------------------recuperation valeur javascript----------------
+				print (ReceptionC.toto);
+				//-----------------------------------------------------------------------
 
 
 				print (hit.distance);
@@ -126,23 +142,23 @@ public class Shoot : MonoBehaviour
 
 
 				distanceTemp = 300;      /// distance temporaire avant le retour recast  
-				pressionTemp = 900 ;                // mLbar ou HPA
+				pressionTemp = 900;                // mLbar ou HPA
 				temperatureTemp = 20;             // °C
 
 				wind = 5;   				 // m/s
-				windDirection = 3 ; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+				windDirection = 3; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 
 
 
 
 				//calculReturn (distanceTemp);
-				returnCorrectionArray = calculReturn(distanceTemp,pressionTemp, temperatureTemp );
+				returnCorrectionArray = calculReturn (distanceTemp, pressionTemp, temperatureTemp);
 
 
 
-				print ("correction distance :" + returnCorrectionArray[0] + "\n" );
-				print ("correction pression :" + returnCorrectionArray[1] + "\n" );
-				print ("correction temperature :" + returnCorrectionArray[2] + "\n" );
+				print ("correction distance :" + returnCorrectionArray [0] + "\n");
+				print ("correction pression :" + returnCorrectionArray [1] + "\n");
+				print ("correction temperature :" + returnCorrectionArray [2] + "\n");
 
 
 
@@ -183,7 +199,7 @@ public class Shoot : MonoBehaviour
 
 
 
-		int[] calculReturn (int distanceValue, int pressionValue, int temperatureValue )
+		int[] calculReturn (int distanceValue, int pressionValue, int temperatureValue)
 		{
 
 				// Tableau distance
@@ -197,17 +213,15 @@ public class Shoot : MonoBehaviour
 
 
 				// Tableau temperature
-				int[] tableTemperatureRef = new int[] { 0, 5, 10, 15, 20 , 25, 30, 35, 40 };  
-				int[] tableTemperatureCorrection = new int[] { 0, 2 , 4, 6, 8 ,10 , 12, 14, 16};  
+				int[] tableTemperatureRef = new int[] { 0, 5, 10, 15, 20, 25, 30, 35, 40 };  
+				int[] tableTemperatureCorrection = new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 };  
 
 
 			
 				// FindIndex in array distance
 
-				for (int i = 0; i < tableDistanceRef.Length; i++)
-				{
-						if ( tableDistanceRef[i] == distanceValue )
-						{
+				for (int i = 0; i < tableDistanceRef.Length; i++) {
+						if (tableDistanceRef [i] == distanceValue) {
 								indexDistance = i; 
 						}
 				}
@@ -215,10 +229,8 @@ public class Shoot : MonoBehaviour
 
 				// FindIndex in array pression
 
-				for (int i = 0; i < tablePressionRef.Length; i++)
-				{
-						if ( tablePressionRef[i] == pressionValue )
-						{
+				for (int i = 0; i < tablePressionRef.Length; i++) {
+						if (tablePressionRef [i] == pressionValue) {
 								indexPression = i; 
 						}
 				}
@@ -228,10 +240,8 @@ public class Shoot : MonoBehaviour
 
 				// FindIndex in array temperature
 
-				for (int i = 0; i < tableTemperatureRef.Length; i++)
-				{
-						if ( tableTemperatureRef[i] == temperatureValue )
-						{
+				for (int i = 0; i < tableTemperatureRef.Length; i++) {
+						if (tableTemperatureRef [i] == temperatureValue) {
 								indexTemperature = i; 
 						}
 				}
@@ -241,7 +251,11 @@ public class Shoot : MonoBehaviour
 
 
 
-				int[] correctionArray = new int[] { tableDistanceCorrection[indexDistance] , tablePressionCorrection[indexPression], tableTemperatureCorrection[indexTemperature] };  
+				int[] correctionArray = new int[] {
+						tableDistanceCorrection [indexDistance],
+						tablePressionCorrection [indexPression],
+						tableTemperatureCorrection [indexTemperature]
+				};  
 		
 
 				return correctionArray;

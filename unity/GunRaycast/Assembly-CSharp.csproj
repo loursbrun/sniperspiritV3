@@ -48,14 +48,12 @@
      <Compile Include="Assets\Scripts\Disappear.cs" />
      <Compile Include="Assets\Scripts\InfoBullet.cs" />
      <Compile Include="Assets\Scripts\MoveBullet.cs" />
+     <Compile Include="Assets\Scripts\ReceptionC.cs" />
      <Compile Include="Assets\Scripts\Shoot.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>/Work/Fabien/sniperspiritV3-doc/GunRaycast/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -66,6 +64,8 @@
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{B0BF5171-5C32-13D3-3EBB-8EC4BFB20BCF}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
+      <Project>{22E3A39E-0E7C-3425-B3B6-CBD2AA038232}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
