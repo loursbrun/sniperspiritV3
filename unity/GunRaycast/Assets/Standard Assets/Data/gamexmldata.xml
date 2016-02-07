@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<levels>
+	<level><!-- level 1 ! -->
+	<name>Level 1 (xml)</name>
+	<tutorial>Try comes close to all four objects. (xml)</tutorial>
+	<object name="Cube"> Hi, I'm a cube! (xml) </object>
+	<object name="Cylinder"> Hi, I'm a Cylinder! (xml) </object>
+	<object name="Capsule"> Hi, I'm a Capsule! (xml) </object>
+	<object name="Sphere"> Hi, I'm a Sphere! (xml)</object>
+	<finaltext>Very Good! (xml)</finaltext>
+	</level>
+	<level><!-- level 2 ! -->
+	<name>Level 2 (xml)</name>
+	<tutorial>Try comes close to all four objects, again. (xml)</tutorial>
+	<object name="Cube"> Hi, I'm a cube in the level 2! (xml)</object>
+	<object name="Cylinder"> Hi, I'm a Cylinder in the level 2! (xml)</object>
+	<object name="Capsule"> Hi, I'm a Capsule in the level 2! (xml)</object>
+	<object name="Sphere"> Hi, I'm a Sphere in the level 2! (xml)</object>
+	<finaltext>Congratulations! (xml)</finaltext>
+	</level>
+</levels>

@@ -8,7 +8,7 @@ public class EmissionC : MonoBehaviour
 
 		public  int var1_charp = 15;
 
-
+		public  string objet_charp = "mon objet de c# !!";
 
 
 

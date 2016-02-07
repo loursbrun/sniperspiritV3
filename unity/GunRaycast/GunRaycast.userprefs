@@ -2,16 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/EmissionJ.js">
     <Files>
-      <File FileName="Assets/Standard Assets/Characters/FirstPersonCharacter/Scripts/MouseLook.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/InfoBullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Shoot.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MoveBullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Disappear.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Characters/FirstPersonCharacter/Scripts/FirstPersonController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Characters/FirstPersonCharacter/Scripts/RigidbodyFirstPersonController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Characters/FirstPersonCharacter/Scripts/HeadBob.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Characters/FirstPersonCharacter/FirstPersonCharacterGuidelines.txt" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/EmissionJ.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Shoot.cs" Line="141" Column="65" />
+      <File FileName="Assets/Scripts/ReceptionC.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/ReceptionJ.js" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/EmissionC.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/EmissionJ.js" Line="8" Column="79" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

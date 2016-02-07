@@ -5,8 +5,8 @@ public  class ReceptionC : MonoBehaviour
 {
 
 		public  static string toto;
-
 		public  static int var1;
+		public  static string objet;
 		//---------------------creation de la variable pour javascript ------------------------------
 		public  EmissionJ jsScript;
 
@@ -17,5 +17,9 @@ public  class ReceptionC : MonoBehaviour
 
 				toto = jsScript.toto_script;
 				var1 = jsScript.var1_script;
+				objet = jsScript.objet_script;
+
+
+
 		}
 }

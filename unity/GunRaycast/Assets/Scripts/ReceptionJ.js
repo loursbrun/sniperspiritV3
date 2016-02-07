@@ -3,7 +3,9 @@
 private var csScript : EmissionC; 
 public static var toto_js;
 public static var var1_js;
-	
+public static var objet_js;
+
+
 function Awake()
 {
 	//Get the CSharp Script
@@ -11,7 +13,10 @@ function Awake()
 }
 	//--------------------recuperation de la valeur contenu ds C#  -----------------
 	toto_js = csScript.toto_charp;
-
 	var1_js = csScript.var1_charp;
+	objet_js = csScript.objet_charp;
+
 
 	//print(toto_js);
+
+
