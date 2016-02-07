@@ -131,8 +131,15 @@ public class Shoot : MonoBehaviour
 		{
 
 				//-------------------------recuperation valeur javascript----------------
-				print (ReceptionC.toto);
+				//print (ReceptionC.toto);
+				//print ("number :" + ReceptionC.toto);
+
+				print ("number :" + ReceptionC.var1 * 2);
+
 				//-----------------------------------------------------------------------
+
+
+
 
 
 				print (hit.distance);
