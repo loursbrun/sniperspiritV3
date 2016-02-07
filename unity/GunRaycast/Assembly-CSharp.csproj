@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\ReceptionC.cs" />
      <Compile Include="Assets\Scripts\Shoot.cs" />
      <None Include="Assets\Standard Assets\Data\gamexmldata.xml" />
+     <None Include="Assets\Data\tables.xml" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Data\data.xml" />
      <None Include="Assets\Data\gamexmldata.xml" />

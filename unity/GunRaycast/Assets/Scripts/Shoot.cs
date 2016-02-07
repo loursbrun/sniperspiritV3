@@ -147,8 +147,7 @@ public class Shoot : MonoBehaviour
 						}
 				}
 		}
-
-
+			
 
 		public static Vector3 LoadFromXml(string elementName,string typename,int stage)
 		{
@@ -221,15 +220,13 @@ public class Shoot : MonoBehaviour
 
 
 
-
-
-				return new Vector3(X,Y,Z);;
+				return new Vector3(X,Y,Z);
 		}
 
 
 
 
-
+		/*
 
 
 		public void LoadTable()
@@ -238,16 +235,14 @@ public class Shoot : MonoBehaviour
 				xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
 				XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
 
-
 				levels.Add(obj); // add whole obj dictionary in the levels[].
 			
 
-		}
+		}*/
 
+	
 
-
-
-
+		/* a effacer   !!!!!!!!!
 
 		public void GetTable()
 		{
@@ -290,19 +285,77 @@ public class Shoot : MonoBehaviour
 										obj.Add("finaltext",levelsItens.InnerText); // put this in the dictionary.
 								}
 						}
-						*/
+
 						levels.Add(obj); // add whole obj dictionary in the levels[].
 
 				}
-		}
+		} */
 
 
+//    --------------     Function Tables   XML ---------------   //
+		public static Vector3 calculatorFromXml(int distance,int temperature,int vent)
+				{
+					float X = 0;
+					float Y = 0;
+					float Z = 0;
 
+			//string filepath = Application.dataPath + "/Data/data.xml";
+			string filepath = File.ReadAllText(Application.dataPath + "/Data/tables.xml");
+			XmlDocument xmlDoc = new XmlDocument(); 
+			xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/tables.xml")); // load the file.
+		
+	
+			XmlNodeList transformList = xmlDoc.GetElementsByTagName("tables");
+			
+			
+				foreach (XmlNode transformInfo in transformList) {
+						XmlNodeList transformcontent = transformInfo.ChildNodes;
+						
 
+						foreach (XmlNode transformItens in transformcontent) 
+						{
+								if(transformItens.Name == "distance" )
+								{
+										XmlNodeList newtransformList = transformItens.ChildNodes;
+										float distanceTrouvee = float.Parse (transformItens.InnerText);
+										Debug.Log("Distance" + distanceTrouvee);
+										if (distanceTrouvee == distance) {
+												print ("Trouvé !!!!!!!!!!!!!!");
+										}
+																
+										
+									
+										/*foreach (XmlNode newtransformItens in newtransformList)
+										{
+												if(newtransformItens.Name == "x")
+												{
+														X = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+												}
+												if(newtransformItens.Name == "y")
+												{
+														Y = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+												}
+												if(newtransformItens.Name == "z")
+												{
+														Z = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+												}
+										}
+*/
 
+								}
+								 
+						}
+				}
+
+				return new Vector3(distance,temperature,vent);;
+			}
+
+		//    --------------    END Function Tables ---------------   //
 
 		void CalculTable (int MyFocus)
 		{
+				// Function Tables XML
+				print(calculatorFromXml(200,27,63));
 
 				//-------------------------recuperation valeur javascript----------------
 				//print (ReceptionC.toto);
@@ -329,37 +382,28 @@ public class Shoot : MonoBehaviour
 
 
 				//print(LoadFromXml ("FacePosition", "Happy", 1));
-				print(LoadFromXml ("Happy", "FacePosition", 1));
+				//print(LoadFromXml ("Happy", "FacePosition", 1));
 
-
-
-
-
+						
 
 
 				// ------- END XML  ------ --//
 
-
-
-
+		
 				//print (hit.distance);
 				//tableReturn ();
 				//print (tableDistance[2]);
-
-
-
+			
 				distanceTemp = 300;      /// distance temporaire avant le retour recast  
 				pressionTemp = 900;                // mLbar ou HPA
 				temperatureTemp = 20;             // °C
-
 				wind = 5;   				 // m/s
 				windDirection = 3; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 
-
-
-
 				//calculReturn (distanceTemp);
-				returnCorrectionArray = calculReturn (distanceTemp, pressionTemp, temperatureTemp);
+				//returnCorrectionArray = calculReturn (distanceTemp, pressionTemp, temperatureTemp);
+
+
 
 
 
