@@ -150,9 +150,106 @@ public class Shoot : MonoBehaviour
 
 
 
+		public static Vector3 LoadFromXml(string elementName,string typename,int stage)
+		{
+				float X = 0;
+				float Y = 0;
+				float Z = 0;
+				string p1 = "x";
+				string p2 = "y";
+				string p3 = "z";
+				//string filepath = Application.dataPath + "/Data/data.xml";
+				string filepath = File.ReadAllText(Application.dataPath + "/Data/data.xml");
+				//string filepath = Resources.Load("Data");
 
 
-		public void GetLevel()
+				XmlDocument xmlDoc = new XmlDocument(); 
+
+
+
+
+						
+
+						//xmlDoc.Load(File.ReadAllText(filepath)); 
+
+
+
+
+						xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/data.xml")); // load the file.
+				 
+
+
+						//XmlNodeList transformList = xmlDoc.GetElementsByTagName(elementName);
+
+
+				Debug.Log("Coucou" + xmlDoc.ChildNodes.Count); 
+				    XmlNodeList transformList = xmlDoc.GetElementsByTagName(elementName);
+				    
+
+
+						foreach (XmlNode transformInfo in transformList)
+						{
+
+
+
+								XmlNodeList transformcontent = transformInfo.ChildNodes;
+
+								foreach (XmlNode transformItens in transformcontent) 
+								{
+										if(transformItens.Name == typename)
+										{
+												XmlNodeList newtransformList = transformItens.ChildNodes;
+
+												foreach (XmlNode newtransformItens in newtransformList)
+												{
+														if(newtransformItens.Name == "x")
+														{
+																X = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+														}
+														if(newtransformItens.Name == "y")
+														{
+																Y = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+														}
+														if(newtransformItens.Name == "z")
+														{
+																Z = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+														}
+												} 
+										}
+								}
+						}
+
+
+
+
+
+				return new Vector3(X,Y,Z);;
+		}
+
+
+
+
+
+
+
+		public void LoadTable()
+		{
+				XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
+				xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
+				XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
+
+
+				levels.Add(obj); // add whole obj dictionary in the levels[].
+			
+
+		}
+
+
+
+
+
+
+		public void GetTable()
 		{
 				XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
 				xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
@@ -163,6 +260,8 @@ public class Shoot : MonoBehaviour
 						XmlNodeList levelcontent = levelInfo.ChildNodes;
 						obj = new Dictionary<string,string>(); // Create a object(Dictionary) to colect the both nodes inside the level node and then put into levels[] array.
 
+
+						/*
 						foreach (XmlNode levelsItens in levelcontent) // levels itens nodes.
 						{
 								if(levelsItens.Name == "name")
@@ -191,7 +290,9 @@ public class Shoot : MonoBehaviour
 										obj.Add("finaltext",levelsItens.InnerText); // put this in the dictionary.
 								}
 						}
+						*/
 						levels.Add(obj); // add whole obj dictionary in the levels[].
+
 				}
 		}
 
@@ -208,7 +309,7 @@ public class Shoot : MonoBehaviour
 				//print ("number :" + ReceptionC.toto);
 
 				//print ("number :" + ReceptionC.var1 * 2);
-				print ("objet :" + ReceptionC.objet);
+				//print ("objet :" + ReceptionC.objet);
 
 
 				//-----------------------------------------------------------------------
@@ -216,15 +317,32 @@ public class Shoot : MonoBehaviour
 
 				// ------ test  XML   ---------  //
 
-				GetLevel();
-				print ("size of dictionary:" + levels.Count);
+				//GetTable();
+				//LoadTable();
+				//print ("size of dictionary:" + levels.Count);
+
+				//XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
+				//xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
+				//XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
+
+
+
+
+				//print(LoadFromXml ("FacePosition", "Happy", 1));
+				print(LoadFromXml ("Happy", "FacePosition", 1));
+
+
+
+
+
+
 
 				// ------- END XML  ------ --//
 
 
 
 
-				print (hit.distance);
+				//print (hit.distance);
 				//tableReturn ();
 				//print (tableDistance[2]);
 
@@ -245,9 +363,9 @@ public class Shoot : MonoBehaviour
 
 
 
-				print ("correction distance :" + returnCorrectionArray [0] + "\n");
-				print ("correction pression :" + returnCorrectionArray [1] + "\n");
-				print ("correction temperature :" + returnCorrectionArray [2] + "\n");
+				//print ("correction distance :" + returnCorrectionArray [0] + "\n");
+				//print ("correction pression :" + returnCorrectionArray [1] + "\n");
+				//print ("correction temperature :" + returnCorrectionArray [2] + "\n");
 
 
 
