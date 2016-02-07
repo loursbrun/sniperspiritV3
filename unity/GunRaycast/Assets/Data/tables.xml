@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tables>
+ 		<distance>0</distance>
+        <correction>    
+            <hauteur_correction>0</hauteur_correction>
+            <t_vol>100</t_vol>
+            <VENT_X>0</VENT_X>
+            <VENT_Y>0</VENT_Y> 
+            <dervive_gyro>8</dervive_gyro>
+            <temperature>-10</temperature> <correction>    12</correction>
+            <temperature> -5</temperature> <correction>    42</correction>
+            <temperature>  0</temperature> <correction>    72</correction>
+            <temperature>  5</temperature> <correction>    57</correction>
+            <temperature> 10</temperature> <correction>     7</correction>
+            <temperature> 20</temperature> <correction>     4</correction>
+            <temperature> 30</temperature> <correction>     4</correction>
+            <pression>800 </pression>      <correction>    44</correction>
+            <pression>850 </pression>      <correction>    44</correction>
+            <pression>900 </pression>      <correction>    55</correction>
+            <pression>950 </pression>      <correction>    22</correction>
+            <pression>1000</pression>      <correction>    11</correction>
+        </correction>
+
+
+
+
         <distance>100</distance>
         <correction>    
-            <hauteur_correction>25</hauteur_correction>
+            <hauteur_correction>10</hauteur_correction>
             <t_vol>100</t_vol>
             <VENT_X>12</VENT_X>
             <VENT_Y>50</VENT_Y> 
@@ -23,10 +47,10 @@
 
        <distance>200</distance>
        <correction>    
-            <hauteur_correction>25</hauteur_correction>
+            <hauteur_correction>20</hauteur_correction>
             <t_vol>100</t_vol>
-            <VENT_X>12</VENT_X>
-            <VENT_Y>50</VENT_Y>
+            <VENT_X>44</VENT_X>
+            <VENT_Y>33</VENT_Y>
             <dervive_gyro>8</dervive_gyro>
             <temperature>-10</temperature> <correction>    12</correction>
             <temperature> -5</temperature> <correction>    42</correction>
@@ -44,7 +68,7 @@
 
         <distance>300</distance>
         <correction>    
-            <hauteur_correction>25</hauteur_correction>
+            <hauteur_correction>50</hauteur_correction>
             <t_vol>100</t_vol>
             <VENT_X>12</VENT_X>
             <VENT_Y>50</VENT_Y>

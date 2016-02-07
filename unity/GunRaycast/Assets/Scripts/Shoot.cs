@@ -39,15 +39,12 @@ public class Shoot : MonoBehaviour
 		/*
 		*   XML
 		*/
-		public TextAsset GameAsset;
 
-		static string Cube_Character = "";
-		static string Cylinder_Character = "";
-		static string Capsule_Character = "";
-		static string Sphere_Character = "";
 
-		List<Dictionary<string,string>> levels = new List<Dictionary<string,string>>();
-		Dictionary<string,string> obj;
+		static float distanceTrouvee;
+		static float positionNoeudCorrection;
+		static float positionNoeudCorrectionTemp ;
+
 
 
 
@@ -81,19 +78,19 @@ public class Shoot : MonoBehaviour
 
 
 		// modifucation de la hauteur du tir
-		private int correctionDistance;
+		static float correctionDistance;
 		// correction distance
-		private int correctionPression;
+		static float correctionPression;
 		// correction pression
-		private int correctionTemperature;
+		static float correctionTemperature;
 		// correction temperature
-		private int correctionWindHauteur;
+		static float correctionVentY;
 		// correction du vent en hauteur
 
 		// modifucation de la direction du tir
-		private int correctionWindDirection;
+		static float correctionVentX;
 		// correction du vent en direction
-		private int correctionDeriveGyro;
+		static float correctionDeriveGyro;
 		// correction derive gyroscopique
 
 
@@ -149,147 +146,8 @@ public class Shoot : MonoBehaviour
 		}
 			
 
-		public static Vector3 LoadFromXml(string elementName,string typename,int stage)
-		{
-				float X = 0;
-				float Y = 0;
-				float Z = 0;
-				string p1 = "x";
-				string p2 = "y";
-				string p3 = "z";
-				//string filepath = Application.dataPath + "/Data/data.xml";
-				string filepath = File.ReadAllText(Application.dataPath + "/Data/data.xml");
-				//string filepath = Resources.Load("Data");
-
-
-				XmlDocument xmlDoc = new XmlDocument(); 
-
-
-
-
-						
-
-						//xmlDoc.Load(File.ReadAllText(filepath)); 
-
-
-
-
-						xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/data.xml")); // load the file.
-				 
-
-
-						//XmlNodeList transformList = xmlDoc.GetElementsByTagName(elementName);
-
-
-				Debug.Log("Coucou" + xmlDoc.ChildNodes.Count); 
-				    XmlNodeList transformList = xmlDoc.GetElementsByTagName(elementName);
-				    
-
-
-						foreach (XmlNode transformInfo in transformList)
-						{
-
-
-
-								XmlNodeList transformcontent = transformInfo.ChildNodes;
-
-								foreach (XmlNode transformItens in transformcontent) 
-								{
-										if(transformItens.Name == typename)
-										{
-												XmlNodeList newtransformList = transformItens.ChildNodes;
-
-												foreach (XmlNode newtransformItens in newtransformList)
-												{
-														if(newtransformItens.Name == "x")
-														{
-																X = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
-														}
-														if(newtransformItens.Name == "y")
-														{
-																Y = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
-														}
-														if(newtransformItens.Name == "z")
-														{
-																Z = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
-														}
-												} 
-										}
-								}
-						}
-
-
-
-				return new Vector3(X,Y,Z);
-		}
-
-
-
-
-		/*
-
-
-		public void LoadTable()
-		{
-				XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
-				xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
-				XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
-
-				levels.Add(obj); // add whole obj dictionary in the levels[].
-			
-
-		}*/
-
 	
-
-		/* a effacer   !!!!!!!!!
-
-		public void GetTable()
-		{
-				XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
-				xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
-				XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
-
-				foreach (XmlNode levelInfo in levelsList)
-				{
-						XmlNodeList levelcontent = levelInfo.ChildNodes;
-						obj = new Dictionary<string,string>(); // Create a object(Dictionary) to colect the both nodes inside the level node and then put into levels[] array.
-
-
-						/*
-						foreach (XmlNode levelsItens in levelcontent) // levels itens nodes.
-						{
-								if(levelsItens.Name == "name")
-								{
-										obj.Add("name",levelsItens.InnerText); // put this in the dictionary.
-								}
-
-								if(levelsItens.Name == "tutorial")
-								{
-										obj.Add("tutorial",levelsItens.InnerText); // put this in the dictionary.
-								}
-
-								if(levelsItens.Name == "object")
-								{
-										switch(levelsItens.Attributes["name"].Value)
-										{
-										case "Cube": obj.Add("Cube",levelsItens.InnerText);break; // put this in the dictionary.
-										case "Cylinder":obj.Add("Cylinder",levelsItens.InnerText); break; // put this in the dictionary.
-										case "Capsule":obj.Add("Capsule",levelsItens.InnerText); break; // put this in the dictionary.
-										case "Sphere": obj.Add("Sphere",levelsItens.InnerText);break; // put this in the dictionary.
-										}
-								}
-
-								if(levelsItens.Name == "finaltext")
-								{
-										obj.Add("finaltext",levelsItens.InnerText); // put this in the dictionary.
-								}
-						}
-
-						levels.Add(obj); // add whole obj dictionary in the levels[].
-
-				}
-		} */
+	
 
 
 //    --------------     Function Tables   XML ---------------   //
@@ -305,50 +163,117 @@ public class Shoot : MonoBehaviour
 			xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/tables.xml")); // load the file.
 		
 	
-			XmlNodeList transformList = xmlDoc.GetElementsByTagName("tables");
-			
-			
-				foreach (XmlNode transformInfo in transformList) {
-						XmlNodeList transformcontent = transformInfo.ChildNodes;
-						
+			// Recherches Distances
+				positionNoeudCorrection = 0;  // detrmine la position du noeud correction
+			XmlNodeList tablesList = xmlDoc.GetElementsByTagName("tables");
+				foreach (XmlNode tablesDistance in tablesList) {
+						XmlNodeList tablescontent = tablesDistance.ChildNodes;
 
-						foreach (XmlNode transformItens in transformcontent) 
-						{
-								if(transformItens.Name == "distance" )
+							foreach (XmlNode tablesItens in tablescontent) 
 								{
-										XmlNodeList newtransformList = transformItens.ChildNodes;
-										float distanceTrouvee = float.Parse (transformItens.InnerText);
-										Debug.Log("Distance" + distanceTrouvee);
-										if (distanceTrouvee == distance) {
-												print ("Trouvé !!!!!!!!!!!!!!");
-										}
-																
-										
-									
-										/*foreach (XmlNode newtransformItens in newtransformList)
-										{
-												if(newtransformItens.Name == "x")
+									if(tablesItens.Name == "distance" )
+									{
+											XmlNodeList newtablesList = tablesItens.ChildNodes;
+											 distanceTrouvee = float.Parse (tablesItens.InnerText);
+											// si la distance est trouvée le foreach break
+												//Debug.Log("Distance" + distanceTrouvee);
+										// on incremente la positionNoeudCorrection
+										positionNoeudCorrection ++ ;
+											if (distanceTrouvee == distance) 
 												{
-														X = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
+												print ("Distance Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!!" + positionNoeudCorrection);
+													// Break !!!!!!!!
+													break;
 												}
-												if(newtransformItens.Name == "y")
-												{
-														Y = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
-												}
-												if(newtransformItens.Name == "z")
-												{
-														Z = float.Parse(newtransformItens.InnerText); // convert the strings to float and apply to the Y variable.
-												}
-										}
-*/
-
+									}
 								}
-								 
+							}
+			// Fin recherche Distances
+
+
+			// Recherches Corrections Distance
+			
+			XmlNodeList correctionList = xmlDoc.GetElementsByTagName("correction");
+			foreach (XmlNode tablesDistance in correctionList) {
+						positionNoeudCorrectionTemp++;
+					XmlNodeList tablescontent = tablesDistance.ChildNodes;
+					foreach (XmlNode tablesItens in tablescontent) 
+					{
+							if(tablesItens.Name == "correction" )
+							{
+									XmlNodeList newcorrectionList = tablesItens.ChildNodes;
+									
+										//print ("coorection :" + newcorrectionList);
+										// Recherche du noeud "hauteur_correction" pour trouver la correctionDistance
+										foreach (XmlNode correctionItens in tablescontent) 
+										{
+												
+												if(correctionItens.Name == "hauteur_correction" )
+												{
+														correctionDistance = float.Parse (correctionItens.InnerText);
+												}   
+
+												if(correctionItens.Name == "VENT_X" )
+												{
+														correctionVentX = float.Parse (correctionItens.InnerText);
+												}   
+
+												if(correctionItens.Name == "VENT_Y" )
+												{
+														correctionVentY = float.Parse (correctionItens.InnerText);
+												}   
+										}
+								}
 						}
-				}
+
+
+						print (positionNoeudCorrectionTemp + "/" + positionNoeudCorrection);
+						if (positionNoeudCorrectionTemp == positionNoeudCorrection) {
+								print ("Coorection Distance : " + correctionDistance);
+								print ("Coorection Vent X : " + correctionVentX);
+								print ("Coorection Vent Y : " + correctionVentY);
+								positionNoeudCorrectionTemp = 0;
+								break;
+						}
+					}
+				// Fin recherche correction Distances
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 				return new Vector3(distance,temperature,vent);;
 			}
+
+
+		// link tuto http://answers.unity3d.com/questions/255756/retrive-value-from-xml.html
+
+
+
+
+	
+
+
+
+
 
 		//    --------------    END Function Tables ---------------   //
 
