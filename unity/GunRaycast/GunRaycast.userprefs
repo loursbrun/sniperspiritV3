@@ -1,12 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/EmissionJ.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Shoot.cs">
     <Files>
-      <File FileName="Assets/Scripts/Shoot.cs" Line="141" Column="65" />
-      <File FileName="Assets/Scripts/ReceptionC.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ReceptionJ.js" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/EmissionC.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/EmissionJ.js" Line="8" Column="79" />
+      <File FileName="Assets/Scripts/Shoot.cs" Line="280" Column="3" />
+      <File FileName="Assets/Data/tables.xml" Line="27" Column="35" />
+      <File FileName="Assets/Data/data.xml" Line="61" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
