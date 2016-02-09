@@ -31,9 +31,12 @@ public class Shoot : MonoBehaviour
 		private float counter = 0;
 		private bool initTable = false;
 		private RaycastHit hit;
+		private RaycastHit horCible;
 		private Ray ray;
 		private float decalageX;
 		private float decalageY;
+		private bool confirmRay = false;
+
 
 
 		/*
@@ -43,7 +46,7 @@ public class Shoot : MonoBehaviour
 
 		static float distanceTrouvee;
 		static float positionNoeudCorrection;
-		static float positionNoeudCorrectionTemp ;
+		static float positionNoeudCorrectionTemp;
 
 
 
@@ -136,9 +139,9 @@ public class Shoot : MonoBehaviour
 
 						ray = new Ray (transform.position, transform.forward);
 						if (Physics.Raycast (ray, out hit, 3000f)) {
-								//------------------------------------------Appel function CalculTable-----------------------
+								//------------------------------------------Appel function CalculTable------------------
 								if (hit.distance < 100) {
-										CalculTable (100);	
+										CalculTable (100);
 								}
 								if (hit.distance < 200 && hit.distance > 100) {
 										CalculTable (200);	
@@ -146,156 +149,154 @@ public class Shoot : MonoBehaviour
 								if (hit.distance < 300 && hit.distance > 200) {
 										CalculTable (300);	
 								}
-								//-------------------------puis affichage après Calcul--------------------------------
-								Instantiate (bulletHole, hit.point, Quaternion.FromToRotation (Vector3.up, hit.normal));
+								//----------------------------verif si hors cible---------------------------------------
+								ConfirmRay ();
+								if (confirmRay == false) {
+										Instantiate (bulletHole, hit.point, Quaternion.FromToRotation (Vector3.up, hit.normal));
+								}
+								if (confirmRay == true) {
+										Instantiate (bulletHole, horCible.point, Quaternion.FromToRotation (Vector3.up, hit.normal));
+										confirmRay = false;
+								}
 						}
 				}
 		}
-			
 
+		void ConfirmRay ()
+		{
+				RaycastHit hitVerif = new RaycastHit ();
+				Ray rayVerif = new Ray (transform.position, transform.forward);
+				Physics.Raycast (rayVerif, out hitVerif, 3000f);
+				RaycastHit hitConfirm = new RaycastHit ();
+				Ray rayConfirm = new Ray (new Vector3 (hit.point.x, hit.point.y, hit.point.z), transform.forward);	
+				Physics.Raycast (rayConfirm, out hitConfirm, 3000f);
+
+				//print (("pointX = ") + hit.distance);
+				//print ("VerifX = " + (int)hitVerif.point.x);
+				//print ("ConfirmX = " + (int)hitConfirm.point.x);
+
+				if ((int)hitVerif.point.x < (int)hitConfirm.point.x) { 
+						confirmRay = true;
+						horCible = hitConfirm;
+				}
+		}
 	
 	
 
 
-//    --------------     Function Tables   XML ---------------   //
-		public static Vector3 calculatorFromXml(int distance,int temperature,int pression, int vent)
-				{
-					float X = 0;
-					float Y = 0;
-					float Z = 0;
+		//    --------------     Function Tables   XML ---------------   //
+		public static Vector3 calculatorFromXml (int distance, int temperature, int pression, int vent)
+		{
+				float X = 0;
+				float Y = 0;
+				float Z = 0;
 
-			//string filepath = Application.dataPath + "/Data/data.xml";
-			string filepath = File.ReadAllText(Application.dataPath + "/Data/tables.xml");
-			XmlDocument xmlDoc = new XmlDocument(); 
-			xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/tables.xml")); // load the file.
+				//string filepath = Application.dataPath + "/Data/data.xml";
+				string filepath = File.ReadAllText (Application.dataPath + "/Data/tables.xml");
+				XmlDocument xmlDoc = new XmlDocument (); 
+				xmlDoc.LoadXml (File.ReadAllText (Application.dataPath + "/Data/tables.xml")); // load the file.
 		
 	
-			// Recherches Distances
+				// Recherches Distances
 				positionNoeudCorrection = 0;  // detrmine la position du noeud correction
-			XmlNodeList tablesList = xmlDoc.GetElementsByTagName("tables");
+				XmlNodeList tablesList = xmlDoc.GetElementsByTagName ("tables");
 				foreach (XmlNode tablesDistance in tablesList) {
 						XmlNodeList tablescontent = tablesDistance.ChildNodes;
 
-							foreach (XmlNode tablesItens in tablescontent) 
-								{
-									if(tablesItens.Name == "distance" )
-									{
-											XmlNodeList newtablesList = tablesItens.ChildNodes;
-											 distanceTrouvee = float.Parse (tablesItens.InnerText);
-											// si la distance est trouvée le foreach break
-												//Debug.Log("Distance" + distanceTrouvee);
+						foreach (XmlNode tablesItens in tablescontent) {
+								if (tablesItens.Name == "distance") {
+										XmlNodeList newtablesList = tablesItens.ChildNodes;
+										distanceTrouvee = float.Parse (tablesItens.InnerText);
+										// si la distance est trouvée le foreach break
+										//Debug.Log("Distance" + distanceTrouvee);
 										// on incremente la positionNoeudCorrection
-										positionNoeudCorrection ++ ;
-											if (distanceTrouvee == distance) 
-												{
-												print ("Distance Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
-													// Break !!!!!!!!
-													break;
-												}
-									}
+										positionNoeudCorrection++;
+										if (distanceTrouvee == distance) {
+												//print ("Distance Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
+												// Break !!!!!!!!
+												break;
+										}
 								}
-							}
-			// Fin recherche Distances
+						}
+				}
+				// Fin recherche Distances
 
 
 
 
-			// Recherches Corrections Distance
+				// Recherches Corrections Distance
 			
-			XmlNodeList correctionList = xmlDoc.GetElementsByTagName("corrections");
-			foreach (XmlNode tablesDistance in correctionList) {
+				XmlNodeList correctionList = xmlDoc.GetElementsByTagName ("corrections");
+				foreach (XmlNode tablesDistance in correctionList) {
 						positionNoeudCorrectionTemp++;
-					XmlNodeList tablescontent = tablesDistance.ChildNodes;
-					foreach (XmlNode tablesItens in tablescontent) 
-					{
-							XmlNodeList newcorrectionList = tablesItens.ChildNodes;
+						XmlNodeList tablescontent = tablesDistance.ChildNodes;
+						foreach (XmlNode tablesItens in tablescontent) {
+								XmlNodeList newcorrectionList = tablesItens.ChildNodes;
 						
-								if(tablesItens.Name == "hauteur_correction" )
-								{
+								if (tablesItens.Name == "hauteur_correction") {
 										correctionDistance = float.Parse (tablesItens.InnerText);
 								}   
-								if(tablesItens.Name == "VENT_X" )
-								{
+								if (tablesItens.Name == "VENT_X") {
 										correctionVentX = float.Parse (tablesItens.InnerText);
 								}   
-								if(tablesItens.Name == "VENT_Y" )
-								{
+								if (tablesItens.Name == "VENT_Y") {
 										correctionVentY = float.Parse (tablesItens.InnerText);
 								}   
-								if(tablesItens.Name == "t_vol" )
-								{
+								if (tablesItens.Name == "t_vol") {
 										tempsDeVol = float.Parse (tablesItens.InnerText);
 								}   
-								if(tablesItens.Name == "dervive_gyro" )
-								{
+								if (tablesItens.Name == "dervive_gyro") {
 										correctionDeriveGyro = float.Parse (tablesItens.InnerText);
 								}   
-								if(tablesItens.Name == "temperature-10" && temperature == -10f )
-								{
+								if (tablesItens.Name == "temperature-10" && temperature == -10f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature-5" && temperature == -5f )
-								{
+								if (tablesItens.Name == "temperature-5" && temperature == -5f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature0" && temperature == 0f )
-								{
+								if (tablesItens.Name == "temperature0" && temperature == 0f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature5" && temperature == 5f )
-								{
+								if (tablesItens.Name == "temperature5" && temperature == 5f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature10" && temperature == 10f )
-								{
+								if (tablesItens.Name == "temperature10" && temperature == 10f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature15" && temperature == 15f )
-								{
+								if (tablesItens.Name == "temperature15" && temperature == 15f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature5" && temperature == 5f )
-								{
+								if (tablesItens.Name == "temperature5" && temperature == 5f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature25" && temperature == 25f )
-								{
+								if (tablesItens.Name == "temperature25" && temperature == 25f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature30" && temperature == 30f )
-								{
+								if (tablesItens.Name == "temperature30" && temperature == 30f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature35" && temperature == 35f )
-								{
+								if (tablesItens.Name == "temperature35" && temperature == 35f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature40" && temperature == 40f )
-								{
+								if (tablesItens.Name == "temperature40" && temperature == 40f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature45" && temperature == 45f )
-								{
+								if (tablesItens.Name == "temperature45" && temperature == 45f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "temperature50" && temperature == 50f )
-								{
+								if (tablesItens.Name == "temperature50" && temperature == 50f) {
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "pression700" && pression == 700f )
-								{
+								if (tablesItens.Name == "pression700" && pression == 700f) {
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "pression800" && pression == 800f )
-								{
+								if (tablesItens.Name == "pression800" && pression == 800f) {
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "pression900" && pression == 900f )
-								{
+								if (tablesItens.Name == "pression900" && pression == 900f) {
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
-								if(tablesItens.Name == "pression1000" && pression == 1000f )
-								{
+								if (tablesItens.Name == "pression1000" && pression == 1000f) {
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
 
@@ -305,26 +306,26 @@ public class Shoot : MonoBehaviour
 
 
 						if (positionNoeudCorrectionTemp == positionNoeudCorrection) {
-								print ("Correction Distance : " + correctionDistance);
-								print ("Correction Vent Y : " + correctionVentY);
-								print ("Correction Temperature : " + correctionTemperature );
-								print ("Correction Pression : " + correctionPression );
+								//print ("Correction Distance : " + correctionDistance);
+								//print ("Correction Vent Y : " + correctionVentY);
+								//print ("Correction Temperature : " + correctionTemperature);
+								//print ("Correction Pression : " + correctionPression);
 								// Total Correction Hauteur
-								correctionTotaleHauteur = correctionDistance + correctionVentY + correctionTemperature + correctionPression ;
-								print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
+								correctionTotaleHauteur = correctionDistance + correctionVentY + correctionTemperature + correctionPression;
+								//print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
 
-								print ("Correction Derive gyro : " + correctionDeriveGyro );
-								print ("Correction Vent X : " + correctionVentX);
+								//print ("Correction Derive gyro : " + correctionDeriveGyro);
+								//print ("Correction Vent X : " + correctionVentX);
 								// Total Correction Hauteur
 								correctionTotaleDirection = correctionVentX	+ correctionDeriveGyro;	
-								print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>" );
+								//print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
 
-								print ("Temps de vol : " + tempsDeVol);
+								//print ("Temps de vol : " + tempsDeVol);
 								positionNoeudCorrectionTemp = 0;
 								break;
 						}
 					
-					}
+				}
 
 				// Fin recherche correction Distances
 
@@ -333,8 +334,8 @@ public class Shoot : MonoBehaviour
 
 
 
-				return new Vector3(correctionTotaleHauteur,correctionTotaleDirection,tempsDeVol);
-			}
+				return new Vector3 (correctionTotaleHauteur, correctionTotaleDirection, tempsDeVol);
+		}
 
 
 		// link tuto http://answers.unity3d.com/questions/255756/retrive-value-from-xml.html
@@ -353,7 +354,7 @@ public class Shoot : MonoBehaviour
 		void CalculTable (int MyFocus)
 		{
 				// Function Tables XML
-				print(calculatorFromXml(300,-5,900,4));
+				//print (calculatorFromXml (300, -5, 900, 4));
 
 				//-------------------------recuperation valeur javascript----------------
 				//print (ReceptionC.toto);

@@ -15,3 +15,20 @@
 /Work/Fabien/sniperspiritV3-doc/GunRaycast/Temp/bin/Debug/Unity.CecilTools.dll
 /Work/Fabien/sniperspiritV3-doc/GunRaycast/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Work/Fabien/sniperspiritV3-doc/GunRaycast/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/obj/Debug/Assembly-CSharp-firstpass.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/obj/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/UnityEngine.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/UnityEditor.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/UnityEngine.UI.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/UnityEngine.Networking.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Mono.Cecil.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Unity.DataContract.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Unity.CecilTools.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Unity/Projects/works/sniper spirit V3/unity/GunRaycast/Temp/bin/Debug/Mono.Cecil.Mdb.dll
