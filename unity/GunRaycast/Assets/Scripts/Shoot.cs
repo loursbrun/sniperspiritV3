@@ -47,7 +47,8 @@ public class Shoot : MonoBehaviour
 		static float distanceTrouvee;
 		static float positionNoeudCorrection;
 		static float positionNoeudCorrectionTemp;
-
+		static float forceVentFace;
+		static float forceVentDirection;
 
 
 
@@ -185,11 +186,29 @@ public class Shoot : MonoBehaviour
 
 
 		//    --------------     Function Tables   XML ---------------   //
-		public static Vector3 calculatorFromXml (int distance, int temperature, int pression, int vent)
+		public static Vector3 calculatorFromXml (int distance, int temperature, int pression, int vent, int directionVent)
 		{
-				float X = 0;
-				float Y = 0;
-				float Z = 0;
+
+				// Calcul Tigonometric du Vent
+				// Info direction du vent 
+				// 12h00 => Cos(0) = 1
+				// 1h00 => Cos(30) = 0.866025
+				// 2h00 => Cos(60) = 0.5
+				// 3h00 => Cos(90) = 0
+				// 4h00 => Cos(120) = -0.5
+				// 5h00 => Cos(150) = -0.866025
+				// 6h00 => Cos(180) = 1
+				// 7h00 => Cos(210) = 1
+				// 8h00 => Cos(240) = 1
+				// 9h00 => Cos(270) = 1
+				// 10h00 => Cos(300) = 1
+				// 11h00 => Cos(330) = 1
+
+				print ("force du vent :<color=red>" + vent + "</color>direction du vent en degres :<color=red>" + directionVent + "</color>");
+				forceVentFace = Mathf.Round(Mathf.Cos (Mathf.PI / 180 * directionVent )* vent);
+				//print ("force vent Face = " + forceVentFace);
+				forceVentDirection = Mathf.Round(Mathf.Sin (Mathf.PI / 180 * directionVent )* vent);
+				//print ("force vent Direction = " + forceVentDirection);
 
 				//string filepath = Application.dataPath + "/Data/data.xml";
 				string filepath = File.ReadAllText (Application.dataPath + "/Data/tables.xml");
@@ -238,9 +257,11 @@ public class Shoot : MonoBehaviour
 								}   
 								if (tablesItens.Name == "VENT_X") {
 										correctionVentX = float.Parse (tablesItens.InnerText);
+										correctionVentX = Mathf.Round(correctionVentX * forceVentDirection / 10);
 								}   
 								if (tablesItens.Name == "VENT_Y") {
 										correctionVentY = float.Parse (tablesItens.InnerText);
+										correctionVentY = Mathf.Round(correctionVentY * forceVentFace / 10);
 								}   
 								if (tablesItens.Name == "t_vol") {
 										tempsDeVol = float.Parse (tablesItens.InnerText);
@@ -306,21 +327,21 @@ public class Shoot : MonoBehaviour
 
 
 						if (positionNoeudCorrectionTemp == positionNoeudCorrection) {
-								//print ("Correction Distance : " + correctionDistance);
-								//print ("Correction Vent Y : " + correctionVentY);
-								//print ("Correction Temperature : " + correctionTemperature);
-								//print ("Correction Pression : " + correctionPression);
+						//		print ("Correction Distance : " + correctionDistance);
+								print ("Correction Vent Y Test: " + correctionVentY);
+						//		print ("Correction Temperature : " + correctionTemperature);
+						//		print ("Correction Pression : " + correctionPression);
 								// Total Correction Hauteur
 								correctionTotaleHauteur = correctionDistance + correctionVentY + correctionTemperature + correctionPression;
-								//print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
+							//	print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
 
-								//print ("Correction Derive gyro : " + correctionDeriveGyro);
-								//print ("Correction Vent X : " + correctionVentX);
+						//		print ("Correction Derive gyro : " + correctionDeriveGyro);
+								print ("Correction Vent X : " + correctionVentX);
 								// Total Correction Hauteur
 								correctionTotaleDirection = correctionVentX	+ correctionDeriveGyro;	
-								//print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
+						//		print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
 
-								//print ("Temps de vol : " + tempsDeVol);
+						//		print ("Temps de vol : " + tempsDeVol);
 								positionNoeudCorrectionTemp = 0;
 								break;
 						}
@@ -354,7 +375,8 @@ public class Shoot : MonoBehaviour
 		void CalculTable (int MyFocus)
 		{
 				// Function Tables XML
-				//print (calculatorFromXml (300, -5, 900, 4));
+				//print (calculatorFromXml (300, -5, 900, 4, 3)); // distance;temperature;pression;vent;direction du vent Degres
+				calculatorFromXml (1000, -5, 900, 4, 270); // distance;temperature;pression;vent;direction du vent Degres
 
 				//-------------------------recuperation valeur javascript----------------
 				//print (ReceptionC.toto);
