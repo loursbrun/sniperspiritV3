@@ -29,7 +29,7 @@
 
        <distance>200</distance>
        <corrections>    
-            <hauteur_correction>77</hauteur_correction>
+            <hauteur_correction>20</hauteur_correction>
             <t_vol>          100</t_vol>
             <VENT_X>          44</VENT_X>
             <VENT_Y>          33</VENT_Y>
@@ -55,7 +55,7 @@
 
         <distance>300</distance>
         <corrections>    
-            <hauteur_correction>50</hauteur_correction>
+            <hauteur_correction>30</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          12</VENT_X>
             <VENT_Y>          50</VENT_Y>
@@ -81,7 +81,7 @@
 
          <distance>400</distance>
         <corrections>    
-            <hauteur_correction>50</hauteur_correction>
+            <hauteur_correction>40</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          12</VENT_X>
             <VENT_Y>          50</VENT_Y>
@@ -133,7 +133,7 @@
 
           <distance>1000</distance>
         <corrections>    
-            <hauteur_correction>50</hauteur_correction>
+            <hauteur_correction>100</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          52</VENT_X>
             <VENT_Y>          1</VENT_Y>

@@ -112,6 +112,10 @@ public class Shoot : MonoBehaviour
 		private int indexPression;
 		private int indexTemperature;
 
+		private int distanceInferieurTrouve;
+		private int distanceSuperieurTrouve;
+
+
 
 		private int[] returnCorrectionArray;
 
@@ -204,11 +208,14 @@ public class Shoot : MonoBehaviour
 				// 10h00 => Cos(300) = 1
 				// 11h00 => Cos(330) = 1
 
-				print ("force du vent :<color=red>" + vent + "</color>direction du vent en degres :<color=red>" + directionVent + "</color>");
+				//print ("force du vent :<color=red>" + vent + "</color>direction du vent en degres :<color=red>" + directionVent + "</color>");
 				forceVentFace = Mathf.Round(Mathf.Cos (Mathf.PI / 180 * directionVent )* vent);
 				//print ("force vent Face = " + forceVentFace);
 				forceVentDirection = Mathf.Round(Mathf.Sin (Mathf.PI / 180 * directionVent )* vent);
 				//print ("force vent Direction = " + forceVentDirection);
+
+
+
 
 				//string filepath = Application.dataPath + "/Data/data.xml";
 				string filepath = File.ReadAllText (Application.dataPath + "/Data/tables.xml");
@@ -227,14 +234,15 @@ public class Shoot : MonoBehaviour
 										XmlNodeList newtablesList = tablesItens.ChildNodes;
 										distanceTrouvee = float.Parse (tablesItens.InnerText);
 										// si la distance est trouvée le foreach break
-										//Debug.Log("Distance" + distanceTrouvee);
+										Debug.Log("Distance" + distanceTrouvee);
 										// on incremente la positionNoeudCorrection
 										positionNoeudCorrection++;
 										if (distanceTrouvee == distance) {
-												//print ("Distance Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
+												print ("Distance Inferieur Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
 												// Break !!!!!!!!
 												break;
 										}
+									
 								}
 						}
 				}
@@ -252,6 +260,7 @@ public class Shoot : MonoBehaviour
 						foreach (XmlNode tablesItens in tablescontent) {
 								XmlNodeList newcorrectionList = tablesItens.ChildNodes;
 						
+
 								if (tablesItens.Name == "hauteur_correction") {
 										correctionDistance = float.Parse (tablesItens.InnerText);
 								}   
@@ -321,14 +330,14 @@ public class Shoot : MonoBehaviour
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
 
-
+			
 						}
 
 
 
 						if (positionNoeudCorrectionTemp == positionNoeudCorrection) {
 						//		print ("Correction Distance : " + correctionDistance);
-								print ("Correction Vent Y Test: " + correctionVentY);
+						//		print ("Correction Vent Y Test: " + correctionVentY);
 						//		print ("Correction Temperature : " + correctionTemperature);
 						//		print ("Correction Pression : " + correctionPression);
 								// Total Correction Hauteur
@@ -336,7 +345,7 @@ public class Shoot : MonoBehaviour
 							//	print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
 
 						//		print ("Correction Derive gyro : " + correctionDeriveGyro);
-								print ("Correction Vent X : " + correctionVentX);
+						//		print ("Correction Vent X : " + correctionVentX);
 								// Total Correction Hauteur
 								correctionTotaleDirection = correctionVentX	+ correctionDeriveGyro;	
 						//		print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
@@ -375,8 +384,8 @@ public class Shoot : MonoBehaviour
 		void CalculTable (int MyFocus)
 		{
 				// Function Tables XML
-				//print (calculatorFromXml (300, -5, 900, 4, 3)); // distance;temperature;pression;vent;direction du vent Degres
-				calculatorFromXml (1000, -5, 900, 4, 270); // distance;temperature;pression;vent;direction du vent Degres
+				//print (calculatorFromXml (200, -5, 900, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
+				calculatorFromXml (200, -5, 900, 4, 270); // distance;temperature;pression;vent;direction du vent Degres
 
 				//-------------------------recuperation valeur javascript----------------
 				//print (ReceptionC.toto);
