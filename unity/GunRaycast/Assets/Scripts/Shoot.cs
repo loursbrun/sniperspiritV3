@@ -193,6 +193,7 @@ public class Shoot : MonoBehaviour
 		public static Vector3 calculatorFromXml (int distance, int temperature, int pression, int vent, int directionVent)
 		{
 
+			
 				// Calcul Tigonometric du Vent
 				// Info direction du vent 
 				// 12h00 => Cos(0) = 1
@@ -228,18 +229,53 @@ public class Shoot : MonoBehaviour
 				XmlNodeList tablesList = xmlDoc.GetElementsByTagName ("tables");
 				foreach (XmlNode tablesDistance in tablesList) {
 						XmlNodeList tablescontent = tablesDistance.ChildNodes;
-
 						foreach (XmlNode tablesItens in tablescontent) {
+
+
+
 								if (tablesItens.Name == "distance") {
+
 										XmlNodeList newtablesList = tablesItens.ChildNodes;
+
 										distanceTrouvee = float.Parse (tablesItens.InnerText);
 										// si la distance est trouvée le foreach break
-										Debug.Log("Distance" + distanceTrouvee);
+										//Debug.Log("Distance" + distanceTrouvee);
 										// on incremente la positionNoeudCorrection
 										positionNoeudCorrection++;
-										if (distanceTrouvee == distance) {
-												print ("Distance Inferieur Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
+
+									
+									
+
+
+
+										// Extrapolation distances
+
+										print ("Distance rellele :" + distance);
+										print ("Distance trouvee:" + distanceTrouvee);
+
+
+
+
+
+
+										distanceInferieurTrouve = distance;
+										distanceSuperieurTrouve = distance;
+
+
+
+										if (distanceTrouvee >= distance) {
+
+												break;
+										}
+
+
+
+
+										if (distance == distanceTrouvee) {
+												//print ("Distance Inferieur Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
 												// Break !!!!!!!!
+
+
 												break;
 										}
 									
@@ -385,7 +421,7 @@ public class Shoot : MonoBehaviour
 		{
 				// Function Tables XML
 				//print (calculatorFromXml (200, -5, 900, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
-				calculatorFromXml (200, -5, 900, 4, 270); // distance;temperature;pression;vent;direction du vent Degres
+				calculatorFromXml (490, -5, 900, 4, 270); // distance;temperature;pression;vent;direction du vent Degres
 
 				//-------------------------recuperation valeur javascript----------------
 				//print (ReceptionC.toto);
