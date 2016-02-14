@@ -4,15 +4,15 @@
         <distance>100</distance>
         <corrections>    
             <hauteur_correction>10</hauteur_correction>
-            <t_vol>          100</t_vol>
-            <VENT_X>          100</VENT_X>
-            <VENT_Y>          100</VENT_Y> 
-            <dervive_gyro>   -18</dervive_gyro>
+            <t_vol>          10</t_vol>
+            <VENT_X>          10</VENT_X>
+            <VENT_Y>          10</VENT_Y> 
+            <dervive_gyro>   10</dervive_gyro>
             <temperature-10> -10</temperature-10> 
             <temperature-5>   -5</temperature-5>
             <temperature0>     0</temperature0>
             <temperature5>     5</temperature5>
-            <temperature10>   -10</temperature10>
+            <temperature10>   10</temperature10>
             <temperature15>   20</temperature15>
             <temperature20>   30</temperature20> 
             <temperature25>   25</temperature25> 
@@ -24,21 +24,21 @@
             <pression700>     70</pression700>     
             <pression800>     85</pression800>  
             <pression900>     90</pression900> 
-            <pression1000>    92</pression1000>  
+            <pression1000>    10</pression1000>  
         </corrections>
 
        <distance>200</distance>
        <corrections>    
             <hauteur_correction>20</hauteur_correction>
-            <t_vol>          100</t_vol>
-            <VENT_X>          44</VENT_X>
-            <VENT_Y>          33</VENT_Y>
-            <dervive_gyro>   -11</dervive_gyro>
+            <t_vol>          20</t_vol>
+            <VENT_X>          20</VENT_X>
+            <VENT_Y>          20</VENT_Y>
+            <dervive_gyro>   20</dervive_gyro>
             <temperature-10> -10</temperature-10> 
             <temperature-5>   -5</temperature-5>
             <temperature0>     0</temperature0>
             <temperature5>     5</temperature5>
-            <temperature10>   -10</temperature10>
+            <temperature10>   20</temperature10>
             <temperature15>   20</temperature15>
             <temperature20>   30</temperature20> 
             <temperature25>   25</temperature25> 
@@ -50,7 +50,7 @@
             <pression700>     70</pression700>     
             <pression800>     85</pression800>  
             <pression900>     90</pression900> 
-            <pression1000>    92</pression1000>  
+            <pression1000>    20</pression1000>  
         </corrections>
 
         <distance>300</distance>
@@ -110,7 +110,7 @@
             <hauteur_correction>50</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          12</VENT_X>
-            <VENT_Y>          50</VENT_Y>
+            <VENT_Y>          0</VENT_Y>
             <dervive_gyro>     8</dervive_gyro>
             <temperature-10> -10</temperature-10> 
             <temperature-5>   -5</temperature-5>
@@ -131,7 +131,7 @@
             <pression1000>    92</pression1000>  
         </corrections>
 
-          <distance>1000</distance>
+          <distance>600</distance>
         <corrections>    
             <hauteur_correction>100</hauteur_correction>
             <t_vol>           100</t_vol>

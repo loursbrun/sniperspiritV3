@@ -44,7 +44,7 @@ public class Shoot : MonoBehaviour
 		*/
 
 
-		static float distanceTrouvee;
+		static float distanceSuperieur;
 		static float positionNoeudCorrection;
 		static float positionNoeudCorrectionTemp;
 		static float forceVentFace;
@@ -88,20 +88,27 @@ public class Shoot : MonoBehaviour
 
 		// modifucation de la hauteur du tir
 		static float correctionDistance;
+		static float correctionDistanceInferieur;
 		// correction distance
 		static float correctionPression;
+		static float correctionPressionInferieur;
 		// correction pression
 		static float correctionTemperature;
+		static float correctionTemperatureInferieur;
 		// correction temperature
 		static float correctionVentY;
+		static float correctionVentYInferieur;
 		// correction du vent en hauteur
 
 		// modifucation de la direction du tir
 		static float correctionVentX;
+		static float correctionVentXInferieur;
 		// correction du vent en direction
 		static float correctionDeriveGyro;
+		static float correctionDeriveGyroInferieur;
 		// correction derive gyroscopique
 		static float tempsDeVol;
+		static float tempsDeVolInferieur;
 		// temps de vol
 
 
@@ -112,8 +119,9 @@ public class Shoot : MonoBehaviour
 		private int indexPression;
 		private int indexTemperature;
 
-		private int distanceInferieurTrouve;
-		private int distanceSuperieurTrouve;
+		static float distanceInferieurTrouve;
+		static float distanceSuperieurTrouve;
+		static float coeficientExtrapolation;
 
 
 
@@ -231,57 +239,55 @@ public class Shoot : MonoBehaviour
 						XmlNodeList tablescontent = tablesDistance.ChildNodes;
 						foreach (XmlNode tablesItens in tablescontent) {
 
-
-
 								if (tablesItens.Name == "distance") {
 
 										XmlNodeList newtablesList = tablesItens.ChildNodes;
 
-										distanceTrouvee = float.Parse (tablesItens.InnerText);
+										distanceSuperieur = float.Parse (tablesItens.InnerText);
 										// si la distance est trouvée le foreach break
-										//Debug.Log("Distance" + distanceTrouvee);
+										//Debug.Log("Distance" + distanceSuperieur);
 										// on incremente la positionNoeudCorrection
 										positionNoeudCorrection++;
 
-									
-									
-
-
-
 										// Extrapolation distances
 
-										print ("Distance rellele :" + distance);
-										print ("Distance trouvee:" + distanceTrouvee);
 
-
-
-
-
-
-										distanceInferieurTrouve = distance;
-										distanceSuperieurTrouve = distance;
-
-
-
-										if (distanceTrouvee >= distance) {
-
-												break;
+										if (distanceSuperieur <= distance) {
+												distanceInferieurTrouve = distanceSuperieur;
 										}
 
-
-
-
-										if (distance == distanceTrouvee) {
-												//print ("Distance Inferieur Trouvé : " + distanceTrouvee + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
+										if (distanceSuperieur >= distance) {
+												distanceSuperieurTrouve = distanceSuperieur;
+												break;
+										}
+												
+										if (distance == distanceSuperieur) {
+												print ("Distance Inferieur Trouvé : " + distanceSuperieur + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
 												// Break !!!!!!!!
-
-
 												break;
 										}
 									
 								}
 						}
 				}
+
+
+				// Coeficient Extrapolation deistance
+				if (distance != distanceSuperieurTrouve && distance != distanceInferieurTrouve) {
+						coeficientExtrapolation = 1f - (distanceSuperieurTrouve - distance) / (distanceSuperieurTrouve - distanceInferieurTrouve);
+				} else {
+						coeficientExtrapolation = 1f;
+				}
+
+				print ("Distance Inferieur:" + distanceInferieurTrouve);
+				print ("Distance rellele :" + distance);
+				print ("Distance Superieur:" + distanceSuperieurTrouve);
+				print ("Coeficient Extrapolation:" + coeficientExtrapolation);
+
+
+
+
+
 				// Fin recherche Distances
 
 
@@ -290,6 +296,19 @@ public class Shoot : MonoBehaviour
 				// Recherches Corrections Distance
 			
 				XmlNodeList correctionList = xmlDoc.GetElementsByTagName ("corrections");
+
+
+
+				// Save corrections distances inferieurs : 
+
+
+
+
+
+
+
+
+
 				foreach (XmlNode tablesDistance in correctionList) {
 						positionNoeudCorrectionTemp++;
 						XmlNodeList tablescontent = tablesDistance.ChildNodes;
@@ -298,71 +317,93 @@ public class Shoot : MonoBehaviour
 						
 
 								if (tablesItens.Name == "hauteur_correction") {
+										correctionDistanceInferieur = correctionDistance;
 										correctionDistance = float.Parse (tablesItens.InnerText);
 								}   
 								if (tablesItens.Name == "VENT_X") {
+										correctionVentXInferieur = correctionVentX;
 										correctionVentX = float.Parse (tablesItens.InnerText);
 										correctionVentX = Mathf.Round(correctionVentX * forceVentDirection / 10);
 								}   
 								if (tablesItens.Name == "VENT_Y") {
+										correctionVentYInferieur = correctionVentY;
 										correctionVentY = float.Parse (tablesItens.InnerText);
 										correctionVentY = Mathf.Round(correctionVentY * forceVentFace / 10);
 								}   
 								if (tablesItens.Name == "t_vol") {
+										tempsDeVolInferieur = tempsDeVol;
 										tempsDeVol = float.Parse (tablesItens.InnerText);
 								}   
 								if (tablesItens.Name == "dervive_gyro") {
+										correctionDeriveGyroInferieur = correctionDeriveGyro;
 										correctionDeriveGyro = float.Parse (tablesItens.InnerText);
 								}   
 								if (tablesItens.Name == "temperature-10" && temperature == -10f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature-5" && temperature == -5f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature0" && temperature == 0f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature5" && temperature == 5f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature10" && temperature == 10f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature15" && temperature == 15f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature5" && temperature == 5f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature25" && temperature == 25f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature30" && temperature == 30f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature35" && temperature == 35f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature40" && temperature == 40f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature45" && temperature == 45f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "temperature50" && temperature == 50f) {
+										correctionTemperatureInferieur = correctionTemperature;
 										correctionTemperature = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "pression700" && pression == 700f) {
+										correctionPressionInferieur = correctionPression;
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "pression800" && pression == 800f) {
+										correctionPressionInferieur = correctionPression;
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "pression900" && pression == 900f) {
+										correctionPressionInferieur = correctionPression;
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
 								if (tablesItens.Name == "pression1000" && pression == 1000f) {
+										correctionPressionInferieur = correctionPression;
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
 
@@ -372,16 +413,51 @@ public class Shoot : MonoBehaviour
 
 
 						if (positionNoeudCorrectionTemp == positionNoeudCorrection) {
-						//		print ("Correction Distance : " + correctionDistance);
-						//		print ("Correction Vent Y Test: " + correctionVentY);
-						//		print ("Correction Temperature : " + correctionTemperature);
-						//		print ("Correction Pression : " + correctionPression);
+								print ("correction DistanceInferieur : " + correctionDistanceInferieur);
+								print ("Correction Distance : " + correctionDistance);
+								print ("Correction Vent Inferieur Y : " + correctionVentYInferieur);
+								print ("Correction Vent Y : " + correctionVentY);
+								print ("Correction Temperature Inferieur : " + correctionTemperatureInferieur);
+								print ("Correction Temperature : " + correctionTemperature);
+								print ("Correction Pression Inferieur: " + correctionPressionInferieur);
+								print ("Correction Pression : " + correctionPression);
+
+
+
+								// Correction après extrapolation linéraire coéficient Distance 
+
+								correctionDistance = correctionDistanceInferieur + ((correctionDistance - correctionDistanceInferieur)) * coeficientExtrapolation  ;
+								print ("Correction Distance Extrapolée : " + correctionDistance);
+
+								correctionVentY = correctionVentYInferieur + ((correctionVentY - correctionVentYInferieur)) * coeficientExtrapolation  ;
+								print ("Correction correctionVentY Extrapolée : " + correctionVentY);
+
+								correctionTemperature = correctionTemperatureInferieur + ((correctionTemperature - correctionTemperatureInferieur)) * coeficientExtrapolation  ;
+								print ("Correction Temperature Extrapolée : " + correctionTemperature);
+
+								correctionPression = correctionPressionInferieur + ((correctionPression - correctionPressionInferieur)) * coeficientExtrapolation  ;
+								print ("Correction Pression Extrapolée : " + correctionPression);
+
+
+
 								// Total Correction Hauteur
 								correctionTotaleHauteur = correctionDistance + correctionVentY + correctionTemperature + correctionPression;
 							//	print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
 
-						//		print ("Correction Derive gyro : " + correctionDeriveGyro);
-						//		print ("Correction Vent X : " + correctionVentX);
+								print ("Correction Derive gyro Inferieur : " + correctionDeriveGyroInferieur);
+								print ("Correction Derive gyro : " + correctionDeriveGyro);
+
+								print ("Correction Vent X Inferieur : " + correctionVentXInferieur);
+								print ("Correction Vent X : " + correctionVentX);
+
+
+								correctionDeriveGyro = correctionDeriveGyroInferieur + ((correctionDeriveGyro - correctionDeriveGyroInferieur)) * coeficientExtrapolation  ;
+								print ("Correction Derive Gyro Extrapolée : " + correctionDeriveGyro);
+
+								correctionVentX = correctionVentXInferieur + ((correctionVentX - correctionVentXInferieur)) * coeficientExtrapolation  ;
+								print ("Correction Vent X Extrapolée : " + correctionVentX);
+
+
 								// Total Correction Hauteur
 								correctionTotaleDirection = correctionVentX	+ correctionDeriveGyro;	
 						//		print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
@@ -408,20 +484,13 @@ public class Shoot : MonoBehaviour
 
 
 
-
-	
-
-
-
-
-
 		//    --------------    END Function Tables ---------------   //
 
 		void CalculTable (int MyFocus)
 		{
 				// Function Tables XML
 				//print (calculatorFromXml (200, -5, 900, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
-				calculatorFromXml (490, -5, 900, 4, 270); // distance;temperature;pression;vent;direction du vent Degres
+				print(calculatorFromXml (100, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
 
 				//-------------------------recuperation valeur javascript----------------
 				//print (ReceptionC.toto);
