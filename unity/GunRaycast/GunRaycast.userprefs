@@ -2,7 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Shoot.cs">
     <Files>
-      <File FileName="Assets/Scripts/Shoot.cs" Line="247" Column="12" />
+      <File FileName="Assets/Scripts/Shoot.cs" Line="239" Column="5" />
+      <File FileName="Assets/Data/tables.xml" Line="34" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

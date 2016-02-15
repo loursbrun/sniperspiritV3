@@ -153,7 +153,7 @@ public class Shoot : MonoBehaviour
 						ray = new Ray (transform.position, transform.forward);
 						if (Physics.Raycast (ray, out hit, 3000f)) {
 								//------------------------------------------Appel function CalculTable------------------
-								if (hit.distance < 100) {
+							/*	if (hit.distance < 100) {
 										CalculTable (100);
 								}
 								if (hit.distance < 200 && hit.distance > 100) {
@@ -162,6 +162,11 @@ public class Shoot : MonoBehaviour
 								if (hit.distance < 300 && hit.distance > 200) {
 										CalculTable (300);	
 								}
+								*/
+
+								print ("distance" + (int)Mathf.Round(hit.distance));
+
+								CalculTable ((int)Mathf.Round(hit.distance));
 								//----------------------------verif si hors cible---------------------------------------
 								ConfirmRay ();
 								if (confirmRay == false) {
@@ -193,15 +198,99 @@ public class Shoot : MonoBehaviour
 						horCible = hitConfirm;
 				}
 		}
-	
-	
 
+
+		// link tuto http://answers.unity3d.com/questions/255756/retrive-value-from-xml.html
+
+
+
+		//    --------------    END Function Tables ---------------   //
+
+		void CalculTable (int MyFocus)
+		{
+				
+		
+				//print (hit.distance);
+				//tableReturn ();
+				//print (tableDistance[2]);
+			
+
+				distanceTemp = MyFocus;      /// distance temporaire avant le retour recast  
+				pressionTemp = 900;                // mLbar ou HPA
+				temperatureTemp = 20;             // °C
+				wind = 5;   				 // m/s
+				windDirection = 3; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+
+				print ("distance Temp:" + distanceTemp);
+
+
+				// Function Tables XML
+				//print(calculatorFromXml (100, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
+				print(calculatorFromXml (distanceTemp, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
+
+				//print ("correction distance :" + returnCorrectionArray [0] + "\n");
+				//print ("correction pression :" + returnCorrectionArray [1] + "\n");
+				//print ("correction temperature :" + returnCorrectionArray [2] + "\n");
+
+				print (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
+
+				decalageY = hit.point.y + calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x;
+
+
+
+				// Ici les deux variables des tourelles de la lunette !!!
+		// Fabrice !!!!!
+				// valTourelleX = -25 ;
+				// valTourelleY = 32 ;
+
+
+
+
+
+
+
+
+				/*
+				switch (MyFocus) {
+				case 100:
+				//----------------------------------------100 m--------------------------------------
+						decalageX = hit.point.z - 0.2f;
+						decalageY = hit.point.y + 0.1f;
+						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
+						break;
+				case 200:
+				//----------------------------------------200 m--------------------------------------
+						decalageX = hit.point.z - 0.2f;
+						decalageY = hit.point.y + 0.1f;
+						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
+						break;
+				case 300:
+						//----------------------------------------200 m--------------------------------------
+						decalageX = hit.point.z + 0.2f;
+						decalageY = hit.point.y - 0.1f;
+						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
+						break;
+				}
+				*/
+
+
+				//-------------------------distribute impact + range pour affichage  (InfoBullet.cs)-----------------------------------
+				transmitOrigin = ray;
+				transmitDistance = hit.distance;
+				transmitRayX = hit.point.x;
+				transmitRayY = hit.point.y;
+				transmitRayZ = hit.point.z;
+		}
+
+
+		//-------------------------recuperation valeur javascript----------------
+		//print (ReceptionC.toto + "number :" + ReceptionC.toto);
+		//-----------------------------------------------------------------------
+				
 
 		//    --------------     Function Tables   XML ---------------   //
 		public static Vector3 calculatorFromXml (int distance, int temperature, int pression, int vent, int directionVent)
 		{
-
-			
 				// Calcul Tigonometric du Vent
 				// Info direction du vent 
 				// 12h00 => Cos(0) = 1
@@ -211,11 +300,11 @@ public class Shoot : MonoBehaviour
 				// 4h00 => Cos(120) = -0.5
 				// 5h00 => Cos(150) = -0.866025
 				// 6h00 => Cos(180) = 1
-				// 7h00 => Cos(210) = 1
-				// 8h00 => Cos(240) = 1
-				// 9h00 => Cos(270) = 1
-				// 10h00 => Cos(300) = 1
-				// 11h00 => Cos(330) = 1
+				// 7h00 => Cos(210) = 0.866025
+				// 8h00 => Cos(240) = 0.5
+				// 9h00 => Cos(270) = 0
+				// 10h00 => Cos(300) = -0.5
+				// 11h00 => Cos(330) = -0.866025
 
 				//print ("force du vent :<color=red>" + vent + "</color>direction du vent en degres :<color=red>" + directionVent + "</color>");
 				forceVentFace = Mathf.Round(Mathf.Cos (Mathf.PI / 180 * directionVent )* vent);
@@ -223,22 +312,17 @@ public class Shoot : MonoBehaviour
 				forceVentDirection = Mathf.Round(Mathf.Sin (Mathf.PI / 180 * directionVent )* vent);
 				//print ("force vent Direction = " + forceVentDirection);
 
-
-
-
 				//string filepath = Application.dataPath + "/Data/data.xml";
 				string filepath = File.ReadAllText (Application.dataPath + "/Data/tables.xml");
 				XmlDocument xmlDoc = new XmlDocument (); 
 				xmlDoc.LoadXml (File.ReadAllText (Application.dataPath + "/Data/tables.xml")); // load the file.
-		
-	
+
 				// Recherches Distances
 				positionNoeudCorrection = 0;  // detrmine la position du noeud correction
 				XmlNodeList tablesList = xmlDoc.GetElementsByTagName ("tables");
 				foreach (XmlNode tablesDistance in tablesList) {
 						XmlNodeList tablescontent = tablesDistance.ChildNodes;
 						foreach (XmlNode tablesItens in tablescontent) {
-
 								if (tablesItens.Name == "distance") {
 
 										XmlNodeList newtablesList = tablesItens.ChildNodes;
@@ -251,7 +335,6 @@ public class Shoot : MonoBehaviour
 
 										// Extrapolation distances
 
-
 										if (distanceSuperieur <= distance) {
 												distanceInferieurTrouve = distanceSuperieur;
 										}
@@ -260,61 +343,40 @@ public class Shoot : MonoBehaviour
 												distanceSuperieurTrouve = distanceSuperieur;
 												break;
 										}
-												
+
 										if (distance == distanceSuperieur) {
 												print ("Distance Inferieur Trouvé : " + distanceSuperieur + "m !!!!!!!!!!!!!! position du noeud xml=>" + positionNoeudCorrection);
 												// Break !!!!!!!!
 												break;
 										}
-									
 								}
 						}
 				}
-
-
-				// Coeficient Extrapolation deistance
+						
+		// Coeficient Extrapolation deistance
 				if (distance != distanceSuperieurTrouve && distance != distanceInferieurTrouve) {
 						coeficientExtrapolation = 1f - (distanceSuperieurTrouve - distance) / (distanceSuperieurTrouve - distanceInferieurTrouve);
 				} else {
 						coeficientExtrapolation = 1f;
 				}
 
-				print ("Distance Inferieur:" + distanceInferieurTrouve);
-				print ("Distance rellele :" + distance);
-				print ("Distance Superieur:" + distanceSuperieurTrouve);
-				print ("Coeficient Extrapolation:" + coeficientExtrapolation);
-
-
-
-
+				//print ("Distance Inferieur:" + distanceInferieurTrouve);
+				//print ("Distance rellele :" + distance);
+				//print ("Distance Superieur:" + distanceSuperieurTrouve);
+				//print ("Coeficient Extrapolation:" + coeficientExtrapolation);
 
 				// Fin recherche Distances
-
-
-
-
 				// Recherches Corrections Distance
-			
+
 				XmlNodeList correctionList = xmlDoc.GetElementsByTagName ("corrections");
 
-
-
 				// Save corrections distances inferieurs : 
-
-
-
-
-
-
-
-
-
 				foreach (XmlNode tablesDistance in correctionList) {
 						positionNoeudCorrectionTemp++;
 						XmlNodeList tablescontent = tablesDistance.ChildNodes;
 						foreach (XmlNode tablesItens in tablescontent) {
 								XmlNodeList newcorrectionList = tablesItens.ChildNodes;
-						
+
 
 								if (tablesItens.Name == "hauteur_correction") {
 										correctionDistanceInferieur = correctionDistance;
@@ -406,14 +468,10 @@ public class Shoot : MonoBehaviour
 										correctionPressionInferieur = correctionPression;
 										correctionPression = float.Parse (tablesItens.InnerText);
 								} 
-
-			
 						}
 
-
-
 						if (positionNoeudCorrectionTemp == positionNoeudCorrection) {
-								print ("correction DistanceInferieur : " + correctionDistanceInferieur);
+								/*	print ("correction DistanceInferieur : " + correctionDistanceInferieur);
 								print ("Correction Distance : " + correctionDistance);
 								print ("Correction Vent Inferieur Y : " + correctionVentYInferieur);
 								print ("Correction Vent Y : " + correctionVentY);
@@ -421,234 +479,52 @@ public class Shoot : MonoBehaviour
 								print ("Correction Temperature : " + correctionTemperature);
 								print ("Correction Pression Inferieur: " + correctionPressionInferieur);
 								print ("Correction Pression : " + correctionPression);
-
-
+							*/
 
 								// Correction après extrapolation linéraire coéficient Distance 
 
 								correctionDistance = correctionDistanceInferieur + ((correctionDistance - correctionDistanceInferieur)) * coeficientExtrapolation  ;
-								print ("Correction Distance Extrapolée : " + correctionDistance);
+								//	print ("Correction Distance Extrapolée : " + correctionDistance);
 
 								correctionVentY = correctionVentYInferieur + ((correctionVentY - correctionVentYInferieur)) * coeficientExtrapolation  ;
-								print ("Correction correctionVentY Extrapolée : " + correctionVentY);
+								//	print ("Correction correctionVentY Extrapolée : " + correctionVentY);
 
 								correctionTemperature = correctionTemperatureInferieur + ((correctionTemperature - correctionTemperatureInferieur)) * coeficientExtrapolation  ;
-								print ("Correction Temperature Extrapolée : " + correctionTemperature);
+								//	print ("Correction Temperature Extrapolée : " + correctionTemperature);
 
 								correctionPression = correctionPressionInferieur + ((correctionPression - correctionPressionInferieur)) * coeficientExtrapolation  ;
-								print ("Correction Pression Extrapolée : " + correctionPression);
+								//	print ("Correction Pression Extrapolée : " + correctionPression);
 
-
-
-								// Total Correction Hauteur
+			// Total Correction Hauteur
 								correctionTotaleHauteur = correctionDistance + correctionVentY + correctionTemperature + correctionPression;
-							//	print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
+								//	print ("<color=red>Total Correction Hauteur : " + correctionTotaleHauteur + "</color>");
 
-								print ("Correction Derive gyro Inferieur : " + correctionDeriveGyroInferieur);
-								print ("Correction Derive gyro : " + correctionDeriveGyro);
+								//	print ("Correction Derive gyro Inferieur : " + correctionDeriveGyroInferieur);
+								//	print ("Correction Derive gyro : " + correctionDeriveGyro);
 
-								print ("Correction Vent X Inferieur : " + correctionVentXInferieur);
-								print ("Correction Vent X : " + correctionVentX);
-
+								//	print ("Correction Vent X Inferieur : " + correctionVentXInferieur);
+								//	print ("Correction Vent X : " + correctionVentX);
 
 								correctionDeriveGyro = correctionDeriveGyroInferieur + ((correctionDeriveGyro - correctionDeriveGyroInferieur)) * coeficientExtrapolation  ;
-								print ("Correction Derive Gyro Extrapolée : " + correctionDeriveGyro);
+								//	print ("Correction Derive Gyro Extrapolée : " + correctionDeriveGyro);
 
 								correctionVentX = correctionVentXInferieur + ((correctionVentX - correctionVentXInferieur)) * coeficientExtrapolation  ;
-								print ("Correction Vent X Extrapolée : " + correctionVentX);
+								//	print ("Correction Vent X Extrapolée : " + correctionVentX);
 
-
-								// Total Correction Hauteur
+			// Total Correction Direction
 								correctionTotaleDirection = correctionVentX	+ correctionDeriveGyro;	
-						//		print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
+								//		print ("<color=red>Total Correction Direction : " + correctionTotaleDirection + "</color>");
 
-						//		print ("Temps de vol : " + tempsDeVol);
+								//		print ("Temps de vol : " + tempsDeVol);
 								positionNoeudCorrectionTemp = 0;
 								break;
 						}
-					
 				}
 
-				// Fin recherche correction Distances
-
-
-
-
-
-
-				return new Vector3 (correctionTotaleHauteur, correctionTotaleDirection, tempsDeVol);
+				return new Vector3 (Mathf.Round(correctionTotaleHauteur), Mathf.Round(correctionTotaleDirection), Mathf.Round(tempsDeVol));
 		}
 
 
-		// link tuto http://answers.unity3d.com/questions/255756/retrive-value-from-xml.html
-
-
-
-		//    --------------    END Function Tables ---------------   //
-
-		void CalculTable (int MyFocus)
-		{
-				// Function Tables XML
-				//print (calculatorFromXml (200, -5, 900, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
-				print(calculatorFromXml (100, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
-
-				//-------------------------recuperation valeur javascript----------------
-				//print (ReceptionC.toto);
-				//print ("number :" + ReceptionC.toto);
-
-				//print ("number :" + ReceptionC.var1 * 2);
-				//print ("objet :" + ReceptionC.objet);
-
-
-				//-----------------------------------------------------------------------
-
-
-				// ------ test  XML   ---------  //
-
-				//GetTable();
-				//LoadTable();
-				//print ("size of dictionary:" + levels.Count);
-
-				//XmlDocument xmlDoc = new XmlDocument(); // xmlDoc is the new xml document.
-				//xmlDoc.LoadXml(File.ReadAllText(Application.dataPath + "/Data/gamexmldata.xml")); // load the file.
-				//XmlNodeList levelsList = xmlDoc.GetElementsByTagName("level"); // array of the level nodes.
-
-
-
-
-				//print(LoadFromXml ("FacePosition", "Happy", 1));
-				//print(LoadFromXml ("Happy", "FacePosition", 1));
-
-						
-
-
-				// ------- END XML  ------ --//
-
-		
-				//print (hit.distance);
-				//tableReturn ();
-				//print (tableDistance[2]);
-			
-				distanceTemp = 300;      /// distance temporaire avant le retour recast  
-				pressionTemp = 900;                // mLbar ou HPA
-				temperatureTemp = 20;             // °C
-				wind = 5;   				 // m/s
-				windDirection = 3; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
-
-				//calculReturn (distanceTemp);
-				//returnCorrectionArray = calculReturn (distanceTemp, pressionTemp, temperatureTemp);
-
-
-
-
-
-				//print ("correction distance :" + returnCorrectionArray [0] + "\n");
-				//print ("correction pression :" + returnCorrectionArray [1] + "\n");
-				//print ("correction temperature :" + returnCorrectionArray [2] + "\n");
-
-
-
-
-
-				switch (MyFocus) {
-				case 100:
-				//----------------------------------------100 m--------------------------------------
-						decalageX = hit.point.z - 0.2f;
-						decalageY = hit.point.y + 0.1f;
-						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
-						break;
-				case 200:
-				//----------------------------------------200 m--------------------------------------
-						decalageX = hit.point.z - 0.2f;
-						decalageY = hit.point.y + 0.1f;
-						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
-						break;
-				case 300:
-						//----------------------------------------200 m--------------------------------------
-						decalageX = hit.point.z + 0.2f;
-						decalageY = hit.point.y - 0.1f;
-						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
-						break;
-				}
-					
-
-
-				//-------------------------distribute impact + range pour affichage  (InfoBullet.cs)-----------------------------------
-				transmitOrigin = ray;
-				transmitDistance = hit.distance;
-				transmitRayX = hit.point.x;
-				transmitRayY = hit.point.y;
-				transmitRayZ = hit.point.z;
-		}
-
-
-
-
-
-
-
-
-		int[] calculReturn (int distanceValue, int pressionValue, int temperatureValue)
-		{
-
-				// Tableau distance
-				int[] tableDistanceRef = new int[] { 100, 200, 300, 400, 500 };  
-				int[] tableDistanceCorrection = new int[] { 6, 0, 10, 21, 34 };  
-
-
-				// Tableau pression
-				int[] tablePressionRef = new int[] { 990, 960, 930, 900, 870 };  
-				int[] tablePressionCorrection = new int[] { 6, 0, 10, 21, 34 };  
-
-
-				// Tableau temperature
-				int[] tableTemperatureRef = new int[] { 0, 5, 10, 15, 20, 25, 30, 35, 40 };  
-				int[] tableTemperatureCorrection = new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 };  
-
-
-			
-				// FindIndex in array distance
-
-				for (int i = 0; i < tableDistanceRef.Length; i++) {
-						if (tableDistanceRef [i] == distanceValue) {
-								indexDistance = i; 
-						}
-				}
-
-
-				// FindIndex in array pression
-
-				for (int i = 0; i < tablePressionRef.Length; i++) {
-						if (tablePressionRef [i] == pressionValue) {
-								indexPression = i; 
-						}
-				}
-
-
-
-
-				// FindIndex in array temperature
-
-				for (int i = 0; i < tableTemperatureRef.Length; i++) {
-						if (tableTemperatureRef [i] == temperatureValue) {
-								indexTemperature = i; 
-						}
-				}
-
-
-
-
-
-
-				int[] correctionArray = new int[] {
-						tableDistanceCorrection [indexDistance],
-						tablePressionCorrection [indexPression],
-						tableTemperatureCorrection [indexTemperature]
-				};  
-		
-
-				return correctionArray;
-		}
 
 
 
