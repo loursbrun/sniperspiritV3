@@ -89,7 +89,8 @@ public class Shoot : MonoBehaviour
 		// Tourelles
 		static float valTourelleX;
 		static float valTourelleY;
-		static float cefficientConvertionClic;
+		static float cefficientConvertionClicHauteur;
+		static float cefficientConvertionClicDirection;
 
 
 		// modifucation de la hauteur du tir
@@ -216,10 +217,10 @@ public class Shoot : MonoBehaviour
 		{
 
 				// Ici les deux variables des tourelles de la lunette !!!
-				// Fabrice !!!!!
-				 valTourelleX = 0 ;
-				 valTourelleY = 0 ;
+				// Fabrice !!!!! c'est ici , il faut que je puisse modifier ces valeurs depuis le jeux !!! Merci !! :)
 
+				valTourelleY = 22 ;
+				valTourelleX = -50 ;
 
 
 				//print (hit.distance);
@@ -238,24 +239,32 @@ public class Shoot : MonoBehaviour
 
 				// Function Tables XML
 				//print(calculatorFromXml (100, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
-				print(calculatorFromXml (distanceTemp, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
+				print(calculatorFromXml (distanceTemp, 10, 1000, 10, 270)); // distance;temperature;pression;vent;direction du vent Degres
 
 
 
-				print (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
+				//print (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
 
-				decalageY = hit.point.y + calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x;
+				//decalageY = hit.point.y + calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x;
 
 
 
 				// Decalge projectile BALISTIQUE
-				cefficientConvertionClic = 0.009f;
-				correctionTotaleHauteur = cefficientConvertionClic * valTourelleY + cefficientConvertionClic * calculatorFromXml(distanceTemp, 10, 1000, 10, 90).x  ;
+				/*
+				// Hauteur
+				*/
+				cefficientConvertionClicHauteur = 0.009f;
+				correctionTotaleHauteur = cefficientConvertionClicHauteur * valTourelleY + cefficientConvertionClicHauteur * calculatorFromXml(distanceTemp, 10, 1000, 10, 270).x  ;
+				decalageY = hit.point.y + correctionTotaleHauteur; 			// Hauteur
 
-				print (correctionTotaleHauteur);
+				/*
+				 * // Direction
+				*/
+				cefficientConvertionClicDirection = 0.0042f;
+				correctionTotaleDirection = - cefficientConvertionClicDirection * valTourelleX - cefficientConvertionClicDirection * calculatorFromXml(distanceTemp, 10, 1000, 10, 270).y  ;
+				decalageX = hit.point.z + correctionTotaleDirection; 		// Direction
 
-				decalageX = hit.point.z - 0f;
-				decalageY = hit.point.y + correctionTotaleHauteur;
+
 				hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
 
 
@@ -536,7 +545,7 @@ public class Shoot : MonoBehaviour
 						}
 				}
 
-				return new Vector3 (Mathf.Round(correctionTotaleHauteur), Mathf.Round(correctionTotaleDirection), Mathf.Round(tempsDeVol));
+				return new Vector3 (Mathf.Round(-correctionTotaleHauteur), -Mathf.Round(correctionTotaleDirection), Mathf.Round(tempsDeVol));
 		}
 
 

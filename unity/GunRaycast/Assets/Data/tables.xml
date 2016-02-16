@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tables>
 
+		<distance>0</distance>
+        <corrections>    
+            <hauteur_correction>0</hauteur_correction>
+            <t_vol>          0</t_vol>
+            <VENT_X>          0</VENT_X>
+            <VENT_Y>          0</VENT_Y> 
+            <dervive_gyro>   0</dervive_gyro>
+            <temperature-10> 0</temperature-10> 
+            <temperature-5>   0</temperature-5>
+            <temperature0>     0</temperature0>
+            <temperature5>     0</temperature5>
+            <temperature10>   0</temperature10>
+            <temperature15>   0</temperature15>
+            <temperature20>   0</temperature20> 
+            <temperature25>   0</temperature25> 
+            <temperature30>   0</temperature30> 
+            <temperature35>   0</temperature35> 
+            <temperature40>   0</temperature40>
+            <temperature45>   0</temperature45>
+            <temperature50>   0</temperature50>  
+            <pression700>     0</pression700>     
+            <pression800>     0</pression800>  
+            <pression900>     0</pression900> 
+            <pression1000>    0</pression1000>  
+        </corrections>
+
         <distance>100</distance>
         <corrections>    
-            <hauteur_correction>15</hauteur_correction>
+            <hauteur_correction>20</hauteur_correction>
             <t_vol>          1</t_vol>
-            <VENT_X>          1</VENT_X>
-            <VENT_Y>          1</VENT_Y> 
-            <dervive_gyro>   1</dervive_gyro>
+            <VENT_X>          50</VENT_X>
+            <VENT_Y>          0</VENT_Y> 
+            <dervive_gyro>   0</dervive_gyro>
             <temperature-10> -1</temperature-10> 
             <temperature-5>   -1</temperature-5>
             <temperature0>     0</temperature0>
@@ -29,33 +55,33 @@
 
        <distance>200</distance>
        <corrections>    
-            <hauteur_correction>20</hauteur_correction>
-            <t_vol>          20</t_vol>
-            <VENT_X>          20</VENT_X>
-            <VENT_Y>          20</VENT_Y>
-            <dervive_gyro>   20</dervive_gyro>
-            <temperature-10> -10</temperature-10> 
-            <temperature-5>   -5</temperature-5>
+            <hauteur_correction>50</hauteur_correction>
+            <t_vol>          1</t_vol>
+            <VENT_X>          50</VENT_X>
+            <VENT_Y>          1</VENT_Y> 
+            <dervive_gyro>   0</dervive_gyro>
+            <temperature-10> -1</temperature-10> 
+            <temperature-5>   -1</temperature-5>
             <temperature0>     0</temperature0>
-            <temperature5>     5</temperature5>
-            <temperature10>   20</temperature10>
-            <temperature15>   20</temperature15>
-            <temperature20>   30</temperature20> 
-            <temperature25>   25</temperature25> 
-            <temperature30>   40</temperature30> 
-            <temperature35>   35</temperature35> 
-            <temperature40>   40</temperature40>
-            <temperature45>   45</temperature45>
-            <temperature50>   50</temperature50>  
-            <pression700>     70</pression700>     
-            <pression800>     85</pression800>  
-            <pression900>     90</pression900> 
-            <pression1000>    20</pression1000>  
+            <temperature5>     1</temperature5>
+            <temperature10>   1</temperature10>
+            <temperature15>   1</temperature15>
+            <temperature20>   1</temperature20> 
+            <temperature25>   1</temperature25> 
+            <temperature30>   1</temperature30> 
+            <temperature35>   1</temperature35> 
+            <temperature40>   1</temperature40>
+            <temperature45>   1</temperature45>
+            <temperature50>   1</temperature50>  
+            <pression700>     1</pression700>     
+            <pression800>     1</pression800>  
+            <pression900>     1</pression900> 
+            <pression1000>    1</pression1000>  
         </corrections>
 
         <distance>300</distance>
         <corrections>    
-            <hauteur_correction>30</hauteur_correction>
+            <hauteur_correction>80</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          12</VENT_X>
             <VENT_Y>          50</VENT_Y>
@@ -81,7 +107,7 @@
 
          <distance>400</distance>
         <corrections>    
-            <hauteur_correction>40</hauteur_correction>
+            <hauteur_correction>120</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          12</VENT_X>
             <VENT_Y>          50</VENT_Y>
@@ -107,7 +133,7 @@
 
          <distance>500</distance>
         <corrections>    
-            <hauteur_correction>50</hauteur_correction>
+            <hauteur_correction>200</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          12</VENT_X>
             <VENT_Y>          0</VENT_Y>
@@ -133,7 +159,7 @@
 
           <distance>600</distance>
         <corrections>    
-            <hauteur_correction>100</hauteur_correction>
+            <hauteur_correction>260</hauteur_correction>
             <t_vol>           100</t_vol>
             <VENT_X>          52</VENT_X>
             <VENT_Y>          1</VENT_Y>
