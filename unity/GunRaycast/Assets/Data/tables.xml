@@ -3,28 +3,28 @@
 
         <distance>100</distance>
         <corrections>    
-            <hauteur_correction>10</hauteur_correction>
-            <t_vol>          10</t_vol>
-            <VENT_X>          10</VENT_X>
-            <VENT_Y>          10</VENT_Y> 
-            <dervive_gyro>   10</dervive_gyro>
-            <temperature-10> -10</temperature-10> 
-            <temperature-5>   -5</temperature-5>
+            <hauteur_correction>15</hauteur_correction>
+            <t_vol>          1</t_vol>
+            <VENT_X>          1</VENT_X>
+            <VENT_Y>          1</VENT_Y> 
+            <dervive_gyro>   1</dervive_gyro>
+            <temperature-10> -1</temperature-10> 
+            <temperature-5>   -1</temperature-5>
             <temperature0>     0</temperature0>
-            <temperature5>     5</temperature5>
-            <temperature10>   10</temperature10>
-            <temperature15>   20</temperature15>
-            <temperature20>   30</temperature20> 
-            <temperature25>   25</temperature25> 
-            <temperature30>   40</temperature30> 
-            <temperature35>   35</temperature35> 
-            <temperature40>   40</temperature40>
-            <temperature45>   45</temperature45>
-            <temperature50>   50</temperature50>  
-            <pression700>     70</pression700>     
-            <pression800>     85</pression800>  
-            <pression900>     90</pression900> 
-            <pression1000>    10</pression1000>  
+            <temperature5>     1</temperature5>
+            <temperature10>   1</temperature10>
+            <temperature15>   1</temperature15>
+            <temperature20>   1</temperature20> 
+            <temperature25>   1</temperature25> 
+            <temperature30>   1</temperature30> 
+            <temperature35>   1</temperature35> 
+            <temperature40>   1</temperature40>
+            <temperature45>   1</temperature45>
+            <temperature50>   1</temperature50>  
+            <pression700>     1</pression700>     
+            <pression800>     1</pression800>  
+            <pression900>     1</pression900> 
+            <pression1000>    1</pression1000>  
         </corrections>
 
        <distance>200</distance>

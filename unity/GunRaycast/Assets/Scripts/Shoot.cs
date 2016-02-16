@@ -86,6 +86,12 @@ public class Shoot : MonoBehaviour
 		static float correctionTotaleDirection;
 
 
+		// Tourelles
+		static float valTourelleX;
+		static float valTourelleY;
+		static float cefficientConvertionClic;
+
+
 		// modifucation de la hauteur du tir
 		static float correctionDistance;
 		static float correctionDistanceInferieur;
@@ -208,8 +214,14 @@ public class Shoot : MonoBehaviour
 
 		void CalculTable (int MyFocus)
 		{
-				
-		
+
+				// Ici les deux variables des tourelles de la lunette !!!
+				// Fabrice !!!!!
+				 valTourelleX = 0 ;
+				 valTourelleY = 0 ;
+
+
+
 				//print (hit.distance);
 				//tableReturn ();
 				//print (tableDistance[2]);
@@ -228,9 +240,7 @@ public class Shoot : MonoBehaviour
 				//print(calculatorFromXml (100, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
 				print(calculatorFromXml (distanceTemp, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
 
-				//print ("correction distance :" + returnCorrectionArray [0] + "\n");
-				//print ("correction pression :" + returnCorrectionArray [1] + "\n");
-				//print ("correction temperature :" + returnCorrectionArray [2] + "\n");
+
 
 				print (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
 
@@ -238,10 +248,15 @@ public class Shoot : MonoBehaviour
 
 
 
-				// Ici les deux variables des tourelles de la lunette !!!
-		// Fabrice !!!!!
-				// valTourelleX = -25 ;
-				// valTourelleY = 32 ;
+				// Decalge projectile BALISTIQUE
+				cefficientConvertionClic = 0.009f;
+				correctionTotaleHauteur = cefficientConvertionClic * valTourelleY + cefficientConvertionClic * calculatorFromXml(distanceTemp, 10, 1000, 10, 90).x  ;
+
+				print (correctionTotaleHauteur);
+
+				decalageX = hit.point.z - 0f;
+				decalageY = hit.point.y + correctionTotaleHauteur;
+				hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
 
 
 
