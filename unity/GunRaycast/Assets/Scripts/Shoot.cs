@@ -87,8 +87,8 @@ public class Shoot : MonoBehaviour
 
 
 		// Tourelles
-		static float valTourelleX;
-		static float valTourelleY;
+		public static float valTourelleX;
+		public static float valTourelleY;
 		static float cefficientConvertionClicHauteur;
 		static float cefficientConvertionClicDirection;
 
@@ -219,8 +219,8 @@ public class Shoot : MonoBehaviour
 				// Ici les deux variables des tourelles de la lunette !!!
 				// Fabrice !!!!! c'est ici , il faut que je puisse modifier ces valeurs depuis le jeux !!! Merci !! :)
 
-				valTourelleY = 22 ;
-				valTourelleX = -50 ;
+				//valTourelleY = 22 ;
+				//valTourelleX = -50 ;
 
 
 				//print (hit.distance);
@@ -245,7 +245,15 @@ public class Shoot : MonoBehaviour
 
 				//print (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
 
-				//decalageY = hit.point.y + calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x;
+				decalageY =  calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x;
+				decalageY = Mathf.Round (decalageY);
+				transmitRayY = decalageY;
+
+
+				decalageX =  calculatorFromXml (distanceTemp, 10, 1000, 10, 90).y;
+				decalageX = Mathf.Round (decalageX);
+				print ("decalageX" + decalageX);
+				transmitRayX = decalageX;
 
 
 
@@ -267,6 +275,9 @@ public class Shoot : MonoBehaviour
 
 				hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
 
+
+				// print valeur decalage projectile
+			
 
 
 
@@ -301,9 +312,10 @@ public class Shoot : MonoBehaviour
 				//-------------------------distribute impact + range pour affichage  (InfoBullet.cs)-----------------------------------
 				transmitOrigin = ray;
 				transmitDistance = hit.distance;
-				transmitRayX = hit.point.x;
-				transmitRayY = hit.point.y;
-				transmitRayZ = hit.point.z;
+				//transmitRayX = hit.point.x;
+				//transmitRayX = valTourelleX;
+				//transmitRayY = hit.point.y;
+				//transmitRayZ = hit.point.z;
 		}
 
 

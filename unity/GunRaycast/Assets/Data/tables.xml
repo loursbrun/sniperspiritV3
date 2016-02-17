@@ -83,9 +83,9 @@
         <corrections>    
             <hauteur_correction>80</hauteur_correction>
             <t_vol>           100</t_vol>
-            <VENT_X>          12</VENT_X>
+            <VENT_X>          4</VENT_X>
             <VENT_Y>          50</VENT_Y>
-            <dervive_gyro>     8</dervive_gyro>
+            <dervive_gyro>     0</dervive_gyro>
             <temperature-10> -10</temperature-10> 
             <temperature-5>   -5</temperature-5>
             <temperature0>     0</temperature0>
@@ -135,9 +135,9 @@
         <corrections>    
             <hauteur_correction>200</hauteur_correction>
             <t_vol>           100</t_vol>
-            <VENT_X>          12</VENT_X>
+            <VENT_X>          0</VENT_X>
             <VENT_Y>          0</VENT_Y>
-            <dervive_gyro>     8</dervive_gyro>
+            <dervive_gyro>     0</dervive_gyro>
             <temperature-10> -10</temperature-10> 
             <temperature-5>   -5</temperature-5>
             <temperature0>     0</temperature0>

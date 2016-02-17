@@ -47,12 +47,25 @@ public class InfoBullet : MonoBehaviour
 						//------------Bullet GUI -----------------------------------------------------------------------
 						range_hit = Shoot.transmitDistance;
 						Range.text = range_hit.ToString ();
+
+
+						//Bullet_X = Shoot.transmitRayX;
+						//info_X.text = Bullet_X.ToString ();
+
+						//Bullet_X = Shoot.valTourelleX;
+						//info_X.text = Bullet_X.ToString ();
+
+						Shoot.valTourelleX = float.Parse (info_X.text);
+						Shoot.valTourelleY = float.Parse (info_Y.text);
+
+						//Bullet_Y = Shoot.transmitRayY;
+						//info_Y.text = Bullet_Y.ToString ();
+
+
+
 						Bullet_X = Shoot.transmitRayX;
-						info_X.text = Bullet_X.ToString ();
 						Bullet_Y = Shoot.transmitRayY;
-						info_Y.text = Bullet_Y.ToString ();
-						Bullet_Z = Shoot.transmitRayZ;
-						info_Z.text = Bullet_Z.ToString ();
+						info_Z.text = "Y:"  + Bullet_Y.ToString () + " X:"  + Bullet_X.ToString () ;
 				}
 	
 		}
