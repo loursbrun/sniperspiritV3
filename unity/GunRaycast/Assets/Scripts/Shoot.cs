@@ -245,15 +245,10 @@ public class Shoot : MonoBehaviour
 
 				//print (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
 
-				decalageY =  calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x;
-				decalageY = Mathf.Round (decalageY);
-				transmitRayY = decalageY;
 
-
-				decalageX =  calculatorFromXml (distanceTemp, 10, 1000, 10, 90).y;
-				decalageX = Mathf.Round (decalageX);
-				print ("decalageX" + decalageX);
-				transmitRayX = decalageX;
+				 
+				transmitRayY = Mathf.Round (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
+				transmitRayX = -Mathf.Round (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).y);
 
 
 
