@@ -229,17 +229,17 @@ public class Shoot : MonoBehaviour
 			
 
 				distanceTemp = MyFocus;      /// distance temporaire avant le retour recast  
+				temperatureTemp = 10;             // °C
 				pressionTemp = 900;                // mLbar ou HPA
-				temperatureTemp = 20;             // °C
 				wind = 5;   				 // m/s
-				windDirection = 3; 		// Heure 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+				windDirection = 270; 		// Heure 0,10,20,30,....180,350... degres
 
 				print ("distance Temp:" + distanceTemp);
 
 
 				// Function Tables XML
 				//print(calculatorFromXml (100, 10, 1000, 10, 90)); // distance;temperature;pression;vent;direction du vent Degres
-				print(calculatorFromXml (distanceTemp, 10, 1000, 10, 270)); // distance;temperature;pression;vent;direction du vent Degres
+				print(calculatorFromXml (distanceTemp, temperatureTemp, pressionTemp, wind, 270)); // distance;temperature;pression;vent;direction du vent Degres
 
 
 
@@ -247,9 +247,9 @@ public class Shoot : MonoBehaviour
 
 
 				 
-				transmitRayY = Mathf.Round (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).x);
-				transmitRayX = -Mathf.Round (calculatorFromXml (distanceTemp, 10, 1000, 10, 90).y);
-
+				transmitRayY = Mathf.Round (calculatorFromXml (distanceTemp, temperatureTemp, pressionTemp, wind, windDirection).x);
+				transmitRayX = Mathf.Round (calculatorFromXml (distanceTemp, temperatureTemp, pressionTemp, wind, windDirection).y);
+				print ("transmitRayX : " + transmitRayX);
 
 
 				// Decalge projectile BALISTIQUE
@@ -257,15 +257,16 @@ public class Shoot : MonoBehaviour
 				// Hauteur
 				*/
 				cefficientConvertionClicHauteur = 0.009f;
-				correctionTotaleHauteur = cefficientConvertionClicHauteur * valTourelleY + cefficientConvertionClicHauteur * calculatorFromXml(distanceTemp, 10, 1000, 10, 270).x  ;
+				correctionTotaleHauteur = cefficientConvertionClicHauteur * valTourelleY + cefficientConvertionClicHauteur * calculatorFromXml(distanceTemp, temperatureTemp, pressionTemp, wind, windDirection).x  ;
 				decalageY = hit.point.y + correctionTotaleHauteur; 			// Hauteur
 
 				/*
 				 * // Direction
 				*/
 				cefficientConvertionClicDirection = 0.0042f;
-				correctionTotaleDirection = - cefficientConvertionClicDirection * valTourelleX - cefficientConvertionClicDirection * calculatorFromXml(distanceTemp, 10, 1000, 10, 270).y  ;
-				decalageX = hit.point.z + correctionTotaleDirection; 		// Direction
+				correctionTotaleDirection = - cefficientConvertionClicDirection * valTourelleX - cefficientConvertionClicDirection * calculatorFromXml(distanceTemp, temperatureTemp, pressionTemp, wind, windDirection
+				).y  ;
+				decalageX = hit.point.z + correctionTotaleDirection  ; 		// Direction
 
 
 				hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
@@ -280,28 +281,7 @@ public class Shoot : MonoBehaviour
 
 
 
-				/*
-				switch (MyFocus) {
-				case 100:
-				//----------------------------------------100 m--------------------------------------
-						decalageX = hit.point.z - 0.2f;
-						decalageY = hit.point.y + 0.1f;
-						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
-						break;
-				case 200:
-				//----------------------------------------200 m--------------------------------------
-						decalageX = hit.point.z - 0.2f;
-						decalageY = hit.point.y + 0.1f;
-						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
-						break;
-				case 300:
-						//----------------------------------------200 m--------------------------------------
-						decalageX = hit.point.z + 0.2f;
-						decalageY = hit.point.y - 0.1f;
-						hit.point = new Vector3 (hit.point.x, decalageY, decalageX);
-						break;
-				}
-				*/
+			
 
 
 				//-------------------------distribute impact + range pour affichage  (InfoBullet.cs)-----------------------------------
