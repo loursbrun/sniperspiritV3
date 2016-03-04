@@ -49,7 +49,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = rigidbodyFirstPersonController.Grounded;
-          //  m_CameraRefocus.SetFocusPoint();
+            //m_CameraRefocus.SetFocusPoint();
         }
     }
 }
